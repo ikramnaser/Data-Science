@@ -13,7 +13,7 @@ Welcome to my collection of Data Science and Machine Learning projects.
 - 🔍 [work in progress]()
 
 ### 📘 Machine Learning
-- 🤖 [Building a Decision Tree Classifier from Scratch]()
+- 🤖 [Building a Decision Tree Classifier from Scratch](https://github.com/ikramnaser/Data-Science/tree/main/machine%20learning)
 
 ---
 
