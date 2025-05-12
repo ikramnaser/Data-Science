@@ -1,21 +1,27 @@
-🧠 #Data Science Projects
-Welcome to my collection of Data Science and Machine Learning projects. Each project has its own folder with code, documentation, and outputs.
+# 🧠 Data Science Projects
 
-📁 Projects by Subject
-Algorithm for Massive Data (ADM)
+Welcome to my collection of Data Science and Machine Learning projects. 
 
-📚 Book Cover Classification with Deep Learning
+---
 
+## 📁 Projects by Subject
 
-Reinforcement Learning:
+### 📘 Algorithm for Massive Data (ADM)
+- 📚 [Book Cover Classification with Deep Learning]()
 
-🔍 Market Basket Analysis with Apriori Algorithm
+### 📘 Reinforcement Learning
+- 🔍 [work in progress]()
 
-machine learning
+### 📘 Machine Learning
+- 🤖 [Building a Decision Tree Classifier from Scratch]()
 
-🤖 building tree classifier from scratch
+---
 
-📌 More projects will be added...
+📌 *More projects will be added...*
 
-📬 Contact
-Feel free to connect with me on LinkedIn or reach out via email at ikramaitt@outlook.it.
+---
+
+## 📬 Contact
+
+Feel free to connect with me on [LinkedIn](www.linkedin.com/in/ikram-aittalebnaser) or reach out via email at **ikramaitt@outlook.it**.
+
