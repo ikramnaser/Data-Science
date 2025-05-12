@@ -11,7 +11,7 @@ Reinforcement Learning:
 
 🔍 Market Basket Analysis with Apriori Algorithm
 
-Machine Learning:
+machine learning
 
 🤖 building tree classifier from scratch
 
