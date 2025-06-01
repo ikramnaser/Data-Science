@@ -1,7 +1,8 @@
 # 🔬 Applied Machine Learning and Data Science Projects
-A showcase of my journey in Machine Learning and Data Science, one experiment at a time.
+
 ---
-## 🗂️ Projects by Subject
+a showcase of my journey in Machine Learning and Data Science, one experiment at a time.
+
 
 ### 🚀 Hackathon: Deploy Machine Learning Models on Google Cloud Platform
 - ❤️‍🩹 [Heart Attack Prediction API – Deployed on GCP](https://github.com/ikramnaser/Deploy-ML-Models-on-Google-Cloud-Platform)
