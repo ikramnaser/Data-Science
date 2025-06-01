@@ -15,6 +15,8 @@ Welcome to my collection of Data Science and Machine Learning projects.
 ### 📘 Machine Learning
 - 🤖 [Building a Decision Tree Classifier from Scratch](https://github.com/ikramnaser/Data-Science/tree/main/machine%20learning)
 
+### 📘 Web Data Processing 
+- 🤖 [Knowledge extraction and NER with LLaMA](https://github.com/ikramnaser/web-data-processing))
 ---
 
 📌 *More projects will be added...*
