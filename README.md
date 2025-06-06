@@ -4,7 +4,7 @@
 a showcase of my journey in Machine Learning and Data Science, one experiment at a time.
 
 
-### 🚀 Hackathon: Deploy Machine Learning Models on Google Cloud Platform
+### 🚀 Deploy ML Models on Google Cloud Platform
 - ❤️‍🩹 [Heart Attack Prediction API – Deployed on GCP](https://github.com/ikramnaser/Deploy-ML-Models-on-Google-Cloud-Platform)
 
 ### 📘 Algorithms for Massive Data (work in progress)
