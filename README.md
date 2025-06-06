@@ -7,9 +7,6 @@ a showcase of my journey in Machine Learning and Data Science, one experiment at
 ### 🚀 Deploy ML Models on Google Cloud Platform
 - ❤️‍🩹 [Heart Attack Prediction API – Deployed on GCP](https://github.com/ikramnaser/Deploy-ML-Models-on-Google-Cloud-Platform)
 
-### 📘 Algorithms for Massive Data (work in progress)
-- 🖼️ [Book Cover Classification with Deep Learning]()
-
 ### 📊 Machine Learning
 - 🌳 [Building a Decision Tree Classifier from Scratch](https://github.com/ikramnaser/Data-Science/tree/main/machine%20learning)
 
@@ -21,6 +18,9 @@ a showcase of my journey in Machine Learning and Data Science, one experiment at
 
 ### 🎮 Reinforcement Learning
 - 🛠️ [Work in Progress]()
+
+### 📘 Algorithms for Massive Data (work in progress)
+- 🖼️ [Book Cover Classification with Deep Learning]()
 
 ---
 
