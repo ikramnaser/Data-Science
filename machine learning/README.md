@@ -1,4 +1,4 @@
-# 🌳 Custom Decision Tree Classifier from Scratch — Mushroom Classification
+# 🌳 Decision Tree Classifier from Scratch — Mushroom Classification
 
 This project implements a full-fledged **Decision Tree Classifier from scratch in Python**, without using scikit-learn or any ML libraries. It is built to classify mushroom edibility using a combination of structured tabular datasets. The implementation includes **data preprocessing**, **hyperparameter tuning**, **post-training pruning**, **feature importance analysis**, and **evaluation**.
 
