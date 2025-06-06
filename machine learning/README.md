@@ -1,92 +1,68 @@
-# 🌲 Tree-Based Classifiers for Multi-Source Data Prediction
+# 🌳 Custom Decision Tree Classifier from Scratch — Mushroom Classification
 
-This repository implements and evaluates decision tree-based classification models trained on structured datasets. The focus is on building robust classifiers using **Scikit-learn**, exploring **hyperparameter tuning**, and applying **data preprocessing** techniques to integrate **multiple datasets** efficiently.
+This project implements a full-fledged **Decision Tree Classifier from scratch in Python**, without using scikit-learn or any ML libraries. It is built to classify mushroom edibility using a combination of structured tabular datasets. The implementation includes **data preprocessing**, **hyperparameter tuning**, **post-training pruning**, **feature importance analysis**, and **evaluation**.
 
----
+## 🚀 Key Highlights
 
-## 🚀 Project Summary
-
-This project demonstrates an end-to-end ML pipeline involving:
-
-- Reading and cleaning multiple structured datasets
-- Encoding categorical labels manually for full control
-- Training multiple **tree-based classifiers**: `DecisionTreeClassifier`, `RandomForestClassifier`, `GradientBoostingClassifier`
-- Performing train/test split and evaluation using accuracy, confusion matrix, and classification report
-- Exploring model robustness with partial dataset augmentation
-- Experimenting with **parameter tuning** for `max_depth`, `n_estimators`, etc.
+- 🔧 **Algorithm from Scratch**: Implemented core decision tree logic, including entropy/gini computation, recursive tree building, prediction, and pruning.
+- 🔍 **Hyperparameter Tuning**: Performed exhaustive grid search over max depth, min samples split, criterion, and pruning toggle.
+- ✂️ **Post-training Pruning**: Supports optional pruning using a validation set to reduce overfitting and improve generalization.
+- 📊 **Feature Importance**: Computed and ranked feature importances based on split gain.
+- 📈 **Evaluation Metrics**: Includes accuracy, precision, recall, F1-score.
+- 🧪 **Multiple Dataset Handling**: Loads, cleans, and merges primary and secondary mushroom datasets, with categorical encoding and handling of missing data.
+- 🧠 **No ML Libraries Used**: Everything (model, metrics, preprocessing, grid search) is custom-built.
 
 ---
 
-## 🧰 Tools & Technologies
+## 🛠 Technologies & Tools Used
 
-| Category              | Tools Used                                                                 |
-|-----------------------|----------------------------------------------------------------------------|
-| **Languages**         | Python                                                                     |
-| **Libraries**         | `pandas`, `numpy`, `scikit-learn`, `matplotlib`, `seaborn`                |
-| **Modeling**          | `DecisionTreeClassifier`, `RandomForestClassifier`, `GradientBoostingClassifier` |
-| **Evaluation**        | Accuracy Score, Confusion Matrix, Classification Report                    |
-
----
-
-## 📁 Project Structure
-
----
-
-## 📊 Dataset & Features
-
-The primary and secondary datasets consist of various structured features and a `class` label. Preprocessing steps ensure compatibility between datasets and include:
-
-- Missing value handling (replaced with "N/A")
-- Label encoding for target classes
-- Subsampling secondary dataset to control training size
+| Category         | Tools & Techniques |
+|------------------|--------------------|
+| Programming      | Python, NumPy |
+| ML Algorithm     | Custom Decision Tree |
+| Data Processing  | CSV parsing, categorical encoding, missing value handling |
+| Hyperparameter Tuning | Grid search (custom implementation) |
+| Model Evaluation | Accuracy, Precision, Recall, F1 |
+| Optimization     | Tree pruning (manual post-fit) |
+| Experimentation  | Feature importance analysis |
 
 ---
 
-## 📈 Models Trained
+## 🧪 Project Workflow
 
-The notebook supports multiple tree-based classifiers:
+### 1. Data Loading & Preprocessing
+- Loaded two separate datasets (primary and secondary mushroom datasets)
+- Merged and sampled the data
+- Encoded categorical features manually
+- Detected feature types (numerical/categorical)
 
-- `DecisionTreeClassifier` (with custom depth)
-- `RandomForestClassifier` (tunable number of estimators)
-- `GradientBoostingClassifier` (focusing on ensemble boosting)
+### 2. Decision Tree Implementation
+- Built a custom decision tree class:
+  - Handles both categorical and numerical features
+  - Supports multiple split criteria (e.g., Gini, Entropy)
+  - Recursive node creation and prediction traversal
+  - Pruning based on validation loss
+- `fit()`, `predict()` and pruning methods written from scratch
 
-Each model is evaluated using:
+### 3. Grid Search & Hyperparameter Tuning
+- Grid search over:
+  - `max_depth`
+  - `min_samples_split`
+  - `criterion`
+  - `prune`
+- Selected best model based on validation F1-score
 
-- Accuracy Score
-- Confusion Matrix Visualization (via Seaborn heatmaps)
-- Detailed Classification Report
-
----
-
-## 🧠 Skills Demonstrated
-
-✅ **Machine Learning Engineering**
-- Model selection and performance evaluation  
-- Tree ensemble techniques and overfitting control  
-- Manual label encoding and dataset integration logic
-
-✅ **Data Science & Analytics**
-- Exploratory Data Analysis (EDA)
-- Performance metrics beyond accuracy  
-- Sampling and class distribution awareness
-
-✅ **Software Engineering Practices**
-- Modular coding via reusable functions
-- Clear separation of training/evaluation logic
-- Readable, reproducible Jupyter workflow
-
-✅ **MLOps & Containerization** *(related deployment experience)*:
-- Docker-based containerization for deploying ML APIs  
-- Experience deploying models to **GCP** via **Flask** + **App Engine**
+### 4. Model Evaluation
+- Trained two versions of the final model:
+  - With pruning
+  - Without pruning
+- Evaluated both on a held-out test set
+- Reported metrics and top 5 important features
 
 ---
+## 📊 Results
 
-## 🧪 Example Output
-
-- 📉 Classification Accuracy: ~85–95% (depending on dataset)
-- 📊 Confusion matrix plots and precision-recall metrics
-- ✅ Demonstrates how tree models handle categorical-rich data
-
----
-
+- Training Accuracy: ~X%
+- Validation Accuracy: ~Y%
+- Test Accuracy: ~Z%
 
