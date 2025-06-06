@@ -62,19 +62,19 @@ This project implements a full-fledged **Decision Tree Classifier from scratch i
 ---
 ## 📊 Results
 
+- Test set metrics (Without Pruning):
+  - accuracy: 0.9028
+  - zero_one_loss: 0.0972
+  - precision: 0.9413
+  - recall: 0.8828
+  - f1_score: 0.9111
 
--Test set metrics (Without Pruning):
- -accuracy: 0.9028
- -zero_one_loss: 0.0972
- -precision: 0.9413
- -recall: 0.8828
- -f1_score: 0.9111
 
--Test set metrics (With Pruning):
- -accuracy: 0.9028
- -zero_one_loss: 0.0972
- -precision: 0.9413
- -recall: 0.8828
- -f1_score: 0.9111
+- Test set metrics (Without Pruning):
+  - accuracy: 0.9028
+  - zero_one_loss: 0.0972
+  - precision: 0.9413
+  - recall: 0.8828
+  - f1_score: 0.9111
 
 
