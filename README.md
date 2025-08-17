@@ -1,7 +1,7 @@
 # 🔬 Applied Machine Learning and Data Science Projects
 
 ---
-a showcase of my journey in Machine Learning and Data Science, one experiment at a time.
+a showcase of my journey in Machine Learning and Data Science.
 
 
 ### 🚀 Deploy ML Models on Google Cloud Platform
