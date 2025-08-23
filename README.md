@@ -20,7 +20,7 @@ a portfolio to showcase my journey in Machine Learning and Data Science.
 - [Work in Progress]()
 
 ### 📘 Algorithms for Massive Data 
-- [Book Cover Classification with Deep Learning]()
+- [Deep Neural Networks for Book Cover Classification](https://github.com/ikramnaser/Data-Science/tree/main/deep%20learning)
 
 
 📌 *More projects will be added...*
