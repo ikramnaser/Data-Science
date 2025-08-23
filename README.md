@@ -12,11 +12,11 @@
 ### 🌍 NLP For Low Resource Languages 
 - [NLP Techniques for Machine Translation](https://github.com/ikramnaser/NLP-darija)
 
-### 🎮 Reinforcement Learning
-- [Work in Progress]()
-
 ### 📘 Algorithms for Massive Data 
 - [Deep Neural Networks for Book Cover Classification](https://github.com/ikramnaser/Data-Science/tree/main/deep%20learning)
+
+### 🎮 Reinforcement Learning
+- [Work in Progress]()
 
 ### 📊 Machine Learning
 - [Building a Decision Tree Classifier from Scratch](https://github.com/ikramnaser/Data-Science/tree/main/machine%20learning)
