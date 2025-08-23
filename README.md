@@ -1,32 +1,29 @@
 # 🔬 Applied Machine Learning and Data Science Projects
 
 ---
-a showcase of my journey in Machine Learning and Data Science.
+a portfolio to showcase my journey in Machine Learning and Data Science.
 
 
 ### 🚀 Deploy ML Models on Google Cloud Platform
-- ❤️‍🩹 [Heart Attack Prediction API – Deployed on GCP](https://github.com/ikramnaser/Deploy-ML-Models-on-Google-Cloud-Platform)
+- [Heart Attack Prediction API – Deployed on GCP](https://github.com/ikramnaser/Deploy-ML-Models-on-Google-Cloud-Platform)
 
 ### 📊 Machine Learning
-- 🌳 [Building a Decision Tree Classifier from Scratch](https://github.com/ikramnaser/Data-Science/tree/main/machine%20learning)
+- [Building a Decision Tree Classifier from Scratch](https://github.com/ikramnaser/Data-Science/tree/main/machine%20learning)
 
 ### 🌐 Web Data Processing 
-- 🧠 [Knowledge Extraction and NER with LLaMA](https://github.com/ikramnaser/web-data-processing)
+- [Knowledge Extraction and NER with LLaMA](https://github.com/ikramnaser/web-data-processing)
 
 ### 🌍 NLP For Low Resource Languages 
-- 🈚 [NLP Techniques for Machine Translation](https://github.com/ikramnaser/NLP-darija)
+- [NLP Techniques for Machine Translation](https://github.com/ikramnaser/NLP-darija)
 
 ### 🎮 Reinforcement Learning
-- 🛠️ [Work in Progress]()
+- [Work in Progress]()
 
-### 📘 Algorithms for Massive Data (work in progress)
-- 🖼️ [Book Cover Classification with Deep Learning]()
+### 📘 Algorithms for Massive Data 
+- [Book Cover Classification with Deep Learning]()
 
----
 
 📌 *More projects will be added...*
-
----
 
 ## 📬 Contact
 
