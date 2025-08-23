@@ -1,14 +1,10 @@
-# 🔬 Applied Machine Learning and Data Science Projects
+# Machine Learning & Data Science Portfolio
 
----
-a portfolio to showcase my journey in Machine Learning and Data Science.
+> A curated portfolio showcasing my applied projects in NLP, Deep Learning, and Data Science.
 
 
 ### 🚀 Deploy ML Models on Google Cloud Platform
 - [Heart Attack Prediction API – Deployed on GCP](https://github.com/ikramnaser/Deploy-ML-Models-on-Google-Cloud-Platform)
-
-### 📊 Machine Learning
-- [Building a Decision Tree Classifier from Scratch](https://github.com/ikramnaser/Data-Science/tree/main/machine%20learning)
 
 ### 🌐 Web Data Processing 
 - [Knowledge Extraction and NER with LLaMA](https://github.com/ikramnaser/web-data-processing)
@@ -22,6 +18,8 @@ a portfolio to showcase my journey in Machine Learning and Data Science.
 ### 📘 Algorithms for Massive Data 
 - [Deep Neural Networks for Book Cover Classification](https://github.com/ikramnaser/Data-Science/tree/main/deep%20learning)
 
+### 📊 Machine Learning
+- [Building a Decision Tree Classifier from Scratch](https://github.com/ikramnaser/Data-Science/tree/main/machine%20learning)
 
 📌 *More projects will be added...*
 
