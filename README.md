@@ -22,7 +22,7 @@
 **Python, TensorFlow/Keras, Convolutional Neural Networks (CNN)**
 - Designed and trained a deep neural network to classify books by their cover art. The project involved advanced image preprocessing, augmentation, and hyperparameter tuning to improve model generalization.
 
-### **[Web Data Extraction and Fact-Checking] (https://github.com/ikramnaser/web-data-processing)**
+### **[Web Data Extraction and Fact-Checking](https://github.com/ikramnaser/web-data-processing)**
 **Python, LLaMA2, BERT, Hugging Face, Wikidata API, llama.cpp**
 - Created a robust system with LLaMA2 7B model for answer generation to natural language questions and automatically verifying their factual accuracy, developed a entity linking system to disambiguate and connect extracted entities to their corresponding pages in Wikipedia and Wikidata, forming an evidence base for validation.
 
