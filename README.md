@@ -9,7 +9,7 @@
 ### **Document Intelligence SaaS Platform**  
 [View Project](https://github.com/ikramnaser/mySaaS)  
 **Python, FastAPI, SpaCy, Tesseract OCR, Google Cloud Run**  
-- Developed a full-stack application for automated document processing. The system extracts text from PDFs and images, classifies documents by type, and identifies named entities using an NLP pipeline. Structured data extraction from unstructured documents.
+- Developed a full-stack application for automated document processing. The system extracts text from PDFs and images, classifies documents by type, and identifies named entities using an NLP pipeline. 
 
 ### **Financial Analysis and Portfolio Optimization**  
 [View Project](https://github.com/ikramnaser/Data-Science/tree/main/investment-portfolio-optimization)  
@@ -18,8 +18,8 @@
 
 ### **NLP for Low-Resource Language Machine Translation**  
 [View Project](https://github.com/ikramnaser/NLP-darija)  
-**Python, TensorFlow, Hugging Face Transformers**  
-- Researched and implemented NLP techniques for Darija (Moroccan Arabic), a low-resource language. The project involved data collection, cleaning, and experimenting with sequence-to-sequence models for dialectal translation.
+**Python, spaCy, TensorFlow, Hugging Face Transformers**  
+- Implemented NLP techniques for Darija (Moroccan Arabic), a low-resource language. The project involved data collection, cleaning, and experimenting with sequence-to-sequence models for dialectal translation.
 
 ### **Cloud-Deployed Predictive Healthcare API**  
 [View Project](https://github.com/ikramnaser/Deploy-ML-Models-on-Google-Cloud-Platform)  
