@@ -6,6 +6,9 @@
 ### 🚀 Deploy ML Models on Google Cloud Platform
 - [Heart Attack Prediction API – Deployed on GCP](https://github.com/ikramnaser/Deploy-ML-Models-on-Google-Cloud-Platform)
 
+### Building my own SaaS for document processing and text extraction
+- [extracts text from PDFs and images, classifies documents by type, and identifies named entities](https://github.com/ikramnaser/mySaaS/tree/main)
+
 ### 🌐 Web Data Processing 
 - [Knowledge Extraction and NER with LLaMA](https://github.com/ikramnaser/web-data-processing)
 
