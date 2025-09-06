@@ -1,8 +1,5 @@
 # Financial Analysis and Portfolio Optimization
 
-A Python-based tool for analyzing historical stock data and building optimized investment portfolios using Modern Portfolio Theory.
-
-## Features
 
 - **Data Collection**: Fetches and processes historical stock data from Yahoo Finance
 - **Visualization**: Descriptive charts for price history, returns distribution, and cumulative returns
@@ -23,7 +20,7 @@ Optimized portfolio for Tech stocks: <img width="841" height="411" alt="image" s
 <img width="755" height="782" alt="image" src="https://github.com/user-attachments/assets/b893e787-d83b-4b15-ab21-9985897f078f" />
 
 
-fOptimized portfolio for Bancking and Finance stocks :<img width="841" height="411" alt="image" src="https://github.com/user-attachments/assets/142ef8c1-8eae-4c02-b1e9-8fd229dd1e21" />
+Optimized portfolio for Bancking and Finance stocks :<img width="841" height="411" alt="image" src="https://github.com/user-attachments/assets/142ef8c1-8eae-4c02-b1e9-8fd229dd1e21" />
 <img width="779" height="779" alt="image" src="https://github.com/user-attachments/assets/f486769e-0ec3-4ee4-907c-81b2f10366e5" />
 
 
