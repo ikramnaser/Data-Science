@@ -9,7 +9,10 @@
 ### **[Document Intelligence SaaS Platform](https://github.com/ikramnaser/mySaaS)**
 **Python, FastAPI, SpaCy, Tesseract OCR, Google Cloud Run**
 - Developed a full-stack application for automated document processing. The system extracts text from PDFs and images, classifies documents by type, and identifies named entities using an NLP pipeline.structured data extraction from unstructured documents
-[View project](https://github.com/ikramnaser/mySaaS)
+
+### **[Financial Analysis and Portfolio Optimization](https://github.com/ikramnaser/Data-Science/tree/main/investment-portfolio-optimization)**
+**Python, Pandas, NumPy, Matplotlib, Seaborn, yfinance, SciPy**
+- Analyzed 5 years of stock data (500 largest companies), visualized correlations & returns, and built Modern Portfolio Theory models with Monte Carlo simulations and Sharpe ratio optimization
 
 ### **[NLP for Low-Resource Language Machine Translation](https://github.com/ikramnaser/NLP-darija)**
 **Python, TensorFlow, Hugging Face Transformers**
