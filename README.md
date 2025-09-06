@@ -6,45 +6,53 @@
 
 ## Projects
 
-### **[Document Intelligence SaaS Platform](https://github.com/ikramnaser/mySaaS)**
-**Python, FastAPI, SpaCy, Tesseract OCR, Google Cloud Run**
-- Developed a full-stack application for automated document processing. The system extracts text from PDFs and images, classifies documents by type, and identifies named entities using an NLP pipeline.structured data extraction from unstructured documents
+### **Document Intelligence SaaS Platform**  
+[View Project](https://github.com/ikramnaser/mySaaS)  
+**Python, FastAPI, SpaCy, Tesseract OCR, Google Cloud Run**  
+- Developed a full-stack application for automated document processing. The system extracts text from PDFs and images, classifies documents by type, and identifies named entities using an NLP pipeline. Structured data extraction from unstructured documents.
 
-### **[Financial Analysis and Portfolio Optimization](https://github.com/ikramnaser/Data-Science/tree/main/investment-portfolio-optimization)**
-**Python, Pandas, NumPy, Matplotlib, Seaborn, yfinance, SciPy**
-- Analyzed 5 years of stock data (500 largest companies), visualized correlations & returns, and built Modern Portfolio Theory models with Monte Carlo simulations and Sharpe ratio optimization
+### **Financial Analysis and Portfolio Optimization**  
+[View Project](https://github.com/ikramnaser/Data-Science/tree/main/investment-portfolio-optimization)  
+**Python, Pandas, NumPy, Matplotlib, Seaborn, yfinance, SciPy**  
+- Analyzed 5 years of stock data (500 largest companies), visualized correlations & returns, and built Modern Portfolio Theory models with Monte Carlo simulations and Sharpe ratio optimization.
 
-### **[NLP for Low-Resource Language Machine Translation](https://github.com/ikramnaser/NLP-darija)**
-**Python, TensorFlow, Hugging Face Transformers**
+### **NLP for Low-Resource Language Machine Translation**  
+[View Project](https://github.com/ikramnaser/NLP-darija)  
+**Python, TensorFlow, Hugging Face Transformers**  
 - Researched and implemented NLP techniques for Darija (Moroccan Arabic), a low-resource language. The project involved data collection, cleaning, and experimenting with sequence-to-sequence models for dialectal translation.
 
-### **[Cloud-Deployed Predictive Healthcare API](https://github.com/ikramnaser/Deploy-ML-Models-on-Google-Cloud-Platform)**
-**Python, Scikit-learn, FastAPI, Google Cloud Platform (GCP)**
+### **Cloud-Deployed Predictive Healthcare API**  
+[View Project](https://github.com/ikramnaser/Deploy-ML-Models-on-Google-Cloud-Platform)  
+**Python, Scikit-learn, FastAPI, Google Cloud Platform (GCP)**  
 - Deployed a machine learning model to predict heart attack risk based on patient clinical data. The end-to-end project includes data analysis, model training, and API development.
 
-### **[Deep Learning for Image Classification](https://github.com/ikramnaser/Data-Science/tree/main/deep%20learning)**
-**Python, TensorFlow/Keras, Convolutional Neural Networks (CNN)**
+### **Deep Learning for Image Classification**  
+[View Project](https://github.com/ikramnaser/Data-Science/tree/main/deep%20learning)  
+**Python, TensorFlow/Keras, Convolutional Neural Networks (CNN)**  
 - Designed and trained a deep neural network to classify books by their cover art. The project involved advanced image preprocessing, augmentation, and hyperparameter tuning to improve model generalization.
 
-### **[Web Data Extraction and Fact-Checking](https://github.com/ikramnaser/web-data-processing)**
-**Python, LLaMA2, BERT, Hugging Face, Wikidata API, llama.cpp**
-- Created a system with LLaMA2 7B model for answer generation to natural language questions and automatically verifying their factual accuracy, developed a entity linking system to disambiguate and connect extracted entities to their corresponding pages in Wikipedia and Wikidata, forming an evidence base for validation.
+### **Web Data Extraction and Fact-Checking**  
+[View Project](https://github.com/ikramnaser/web-data-processing)  
+**Python, LLaMA2, BERT, Hugging Face, Wikidata API, llama.cpp**  
+- Created a system with LLaMA2 7B model for answer generation to natural language questions and automatically verifying their factual accuracy. Developed an entity linking system to disambiguate and connect extracted entities to their corresponding Wikipedia/Wikidata pages, forming an evidence base for validation.
 
-
-### **[Algorithm Implementation: Decision Tree from Scratch](https://github.com/ikramnaser/Data-Science/tree/main/machine%20learning)**
-**Python, NumPy, Algorithms**
+### **Algorithm Implementation: Decision Tree from Scratch**  
+[View Project](https://github.com/ikramnaser/Data-Science/tree/main/machine%20learning)  
+**Python, NumPy, Algorithms**  
 - Implemented a decision tree classifier from the ground up without relying on libraries like scikit-learn. This involved coding the entropy calculation, information gain, and recursive splitting algorithms.
 
-### **[Personality Traits and Drug Consumption Analysis](https://github.com/ikramnaser/Data-Science/tree/main/statistical-modeling)**
-**R, PCA, Logistic Regression, Decision Trees, LDA**
-- Explored the link between personality traits (Five-Factor Model) and drug use through hypothesis testing and multivariate analysis.
-Unsupervised learning: PCA + K-Means to identify personality profiles.
-Supervised learning: Logistic Regression, LDA, and Decision Trees to predict substance use.
+### **Personality Traits and Drug Consumption Analysis**  
+[View Project](https://github.com/ikramnaser/Data-Science/tree/main/statistical-modeling)  
+**R, PCA, Logistic Regression, Decision Trees, LDA**  
+- Explored the link between personality traits (Five-Factor Model) and drug use through hypothesis testing and multivariate analysis.  
+  - **Unsupervised learning:** PCA + K-Means to identify personality profiles.  
+  - **Supervised learning:** Logistic Regression, LDA, and Decision Trees to predict substance use.
+
 ---
 
 ## Contact
 
 Feel free to reach out to discuss my work or potential collaborations.
 
-- **LinkedIn:** [linkedin.com/in/ikram-aittalebnaser](https://www.linkedin.com/in/ikram-aittalebnaser)
+- **LinkedIn:** [linkedin.com/in/ikram-aittalebnaser](https://www.linkedin.com/in/ikram-aittalebnaser)  
 - **Email:** ikramaitt@outlook.it
