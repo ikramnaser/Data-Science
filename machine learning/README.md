@@ -2,19 +2,19 @@
 
 This project implements a full-fledged **Decision Tree Classifier from scratch in Python**, without using scikit-learn or any ML libraries. It is built to classify mushroom edibility using a combination of structured tabular datasets. The implementation includes **data preprocessing**, **hyperparameter tuning**, **post-training pruning**, **feature importance analysis**, and **evaluation**.
 
-## 🚀 Key Highlights
+## Key Highlights
 
-- 🔧 **Algorithm from Scratch**: Implemented core decision tree logic, including entropy/gini computation, recursive tree building, prediction, and pruning.
-- 🔍 **Hyperparameter Tuning**: Performed exhaustive grid search over max depth, min samples split, criterion, and pruning toggle.
-- ✂️ **Post-training Pruning**: Supports optional pruning using a validation set to reduce overfitting and improve generalization.
-- 📊 **Feature Importance**: Computed and ranked feature importances based on split gain.
-- 📈 **Evaluation Metrics**: Includes accuracy, precision, recall, F1-score.
-- 🧪 **Multiple Dataset Handling**: Loads, cleans, and merges primary and secondary mushroom datasets, with categorical encoding and handling of missing data.
-- 🧠 **No ML Libraries Used**: Everything (model, metrics, preprocessing, grid search) is custom-built.
+-  **Algorithm from Scratch**: Implemented core decision tree logic, including entropy/gini computation, recursive tree building, prediction, and pruning.
+-  **Hyperparameter Tuning**: Performed exhaustive grid search over max depth, min samples split, criterion, and pruning toggle.
+-  **Post-training Pruning**: Supports optional pruning using a validation set to reduce overfitting and improve generalization.
+-  **Feature Importance**: Computed and ranked feature importances based on split gain.
+-  **Evaluation Metrics**: Includes accuracy, precision, recall, F1-score.
+-  **Multiple Dataset Handling**: Loads, cleans, and merges primary and secondary mushroom datasets, with categorical encoding and handling of missing data.
+-  **No ML Libraries Used**: Everything (model, metrics, preprocessing, grid search) is custom-built.
 
 ---
 
-## 🛠 Technologies & Tools Used
+## Technologies & Tools Used
 
 | Category         | Tools & Techniques |
 |------------------|--------------------|
@@ -28,7 +28,7 @@ This project implements a full-fledged **Decision Tree Classifier from scratch i
 
 ---
 
-## 🧪 Project Workflow
+##  Project Workflow
 
 ### 1. Data Loading & Preprocessing
 - Loaded two separate datasets (primary and secondary mushroom datasets)
@@ -60,7 +60,7 @@ This project implements a full-fledged **Decision Tree Classifier from scratch i
 - Reported metrics and top 5 important features
 
 ---
-## 📊 Results
+## Results
 
 - Test set metrics (Without Pruning):
   - accuracy: 0.9028
