@@ -6,47 +6,61 @@
 
 ## Projects
 
-### **Document Intelligence SaaS Platform**  
+### Document Intelligence SaaS Platform
 [View Project](https://github.com/ikramnaser/mySaaS)  
-**Python, FastAPI, SpaCy, Tesseract OCR, Google Cloud Run**  
-- Developed a full-stack application for automated document processing. The system extracts text from PDFs and images, classifies documents by type, and identifies named entities using an NLP pipeline. 
+**Tech:** Python, FastAPI, SpaCy, Tesseract OCR, Google Cloud Run  
+**Summary:** Full-stack application for automated document processing. Extracts text from PDFs/images, classifies documents, and identifies named entities.
 
-### **Financial Analysis and Portfolio Optimization**  
+---
+
+### Financial Analysis and Portfolio Optimization
 [View Project](https://github.com/ikramnaser/Data-Science/tree/main/investment-portfolio-optimization)  
-**Python, Pandas, NumPy, Matplotlib, Seaborn, yfinance, SciPy**  
-- Analyzed 5 years of stock data (500 largest companies), visualized correlations & returns, and built Modern Portfolio Theory models with Monte Carlo simulations and Sharpe ratio optimization.
+**Tech:** Python, Pandas, NumPy, Matplotlib, Seaborn, yfinance, SciPy  
+**Summary:** Analyzed 5 years of stock data for 500 companies, visualized correlations & returns, and built portfolio optimization models using Monte Carlo simulations and Sharpe ratio maximization.
 
-### **NLP for Low-Resource Language Machine Translation**  
+---
+
+### NLP for Low-Resource Language Machine Translation
 [View Project](https://github.com/ikramnaser/NLP-darija)  
-**Python, spaCy, TensorFlow, Hugging Face Transformers**  
-- Implemented NLP techniques for Darija (Moroccan Arabic), a low-resource language. The project involved data collection, cleaning, and experimenting with sequence-to-sequence models for dialectal translation.
+**Tech:** Python, TensorFlow, Hugging Face Transformers  
+**Summary:** Implemented NLP techniques for Darija (Moroccan Arabic), including data collection, cleaning, and sequence-to-sequence translation models.
 
-### **Cloud-Deployed Predictive Healthcare API**  
+---
+
+### Cloud-Deployed Predictive Healthcare API
 [View Project](https://github.com/ikramnaser/Deploy-ML-Models-on-Google-Cloud-Platform)  
-**Python, Scikit-learn, FastAPI, Google Cloud Platform (GCP)**  
-- Deployed a machine learning model to predict heart attack risk based on patient clinical data. The end-to-end project includes data analysis, model training, and API development.
+**Tech:** Python, Scikit-learn, FastAPI, Google Cloud Platform (GCP)  
+**Summary:** Deployed a ML model to predict heart attack risk from clinical data. Includes end-to-end pipeline: data analysis, model training, and API deployment.
 
-### **Deep Learning for Image Classification**  
+---
+
+### Deep Learning for Image Classification
 [View Project](https://github.com/ikramnaser/Data-Science/tree/main/deep%20learning)  
-**Python, TensorFlow/Keras, Convolutional Neural Networks (CNN)**  
-- Designed and trained a deep neural network to classify books by their cover art. The project involved advanced image preprocessing, augmentation, and hyperparameter tuning to improve model generalization.
+**Tech:** Python, TensorFlow/Keras, CNN  
+**Summary:** Trained a deep neural network to classify book covers, using advanced preprocessing, augmentation, and hyperparameter tuning for better generalization.
 
-### **Web Data Extraction and Fact-Checking**  
+---
+
+### Web Data Extraction and Fact-Checking
 [View Project](https://github.com/ikramnaser/web-data-processing)  
-**Python, LLaMA2, BERT, Hugging Face, Wikidata API, llama.cpp**  
-- Created a system with LLaMA2 7B model for answer generation to natural language questions and automatically verifying their factual accuracy. Developed an entity linking system to disambiguate and connect extracted entities to their corresponding Wikipedia/Wikidata pages, forming an evidence base for validation.
+**Tech:** Python, LLaMA2, BERT, Hugging Face, Wikidata API, llama.cpp  
+**Summary:** Built a system using LLaMA2 to answer questions and verify facts. Includes entity linking to Wikipedia/Wikidata for evidence-based validation.
 
-### **Algorithm Implementation: Decision Tree from Scratch**  
+---
+
+### Algorithm Implementation: Decision Tree from Scratch
 [View Project](https://github.com/ikramnaser/Data-Science/tree/main/machine%20learning)  
-**Python, NumPy, Algorithms**  
-- Implemented a decision tree classifier from the ground up without relying on libraries like scikit-learn. This involved coding the entropy calculation, information gain, and recursive splitting algorithms.
+**Tech:** Python, NumPy, Algorithms  
+**Summary:** Implemented a decision tree classifier from scratch, including entropy calculation, information gain, and recursive splitting.
 
-### **Personality Traits and Drug Consumption Analysis**  
+---
+
+### Personality Traits and Drug Consumption Analysis
 [View Project](https://github.com/ikramnaser/Data-Science/tree/main/statistical-modeling)  
-**R, PCA, Logistic Regression, Decision Trees, LDA**  
-- Explored the link between personality traits (Five-Factor Model) and drug use through hypothesis testing and multivariate analysis.  
-  - **Unsupervised learning:** PCA + K-Means to identify personality profiles.  
-  - **Supervised learning:** Logistic Regression, LDA, and Decision Trees to predict substance use.
+**Tech:** R, PCA, Logistic Regression, Decision Trees, LDA  
+**Summary:** Explored relationships between personality traits and drug use.  
+- **Unsupervised learning:** PCA + K-Means to identify personality profiles.  
+- **Supervised learning:** Logistic Regression, LDA, and Decision Trees to predict substance use.
 
 ---
 
