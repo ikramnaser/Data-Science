@@ -35,6 +35,11 @@
 **Python, NumPy, Algorithms**
 - Implemented a decision tree classifier from the ground up without relying on libraries like scikit-learn. This involved coding the entropy calculation, information gain, and recursive splitting algorithms.
 
+### **[Personality Traits and Drug Consumption Analysis](https://github.com/ikramnaser/Data-Science/tree/main/statistical-modeling)**
+**R, PCA, Logistic Regression, Decision Trees, LDA**
+- Explored the link between personality traits (Five-Factor Model) and drug use through hypothesis testing and multivariate analysis.
+Unsupervised learning: PCA + K-Means to identify personality profiles.
+Supervised learning: Logistic Regression, LDA, and Decision Trees to predict substance use.
 ---
 
 ## Contact
