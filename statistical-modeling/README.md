@@ -9,7 +9,7 @@ This project investigates the relationship between human personality—using the
 
 ---
 
-##  Skills Demonstrated
+##  Methodology
 - **Statistical Analysis & Inference:** Hypothesis testing, multivariate analysis  
 - **Unsupervised Learning:** PCA, K-Means clustering  
 - **Supervised Learning:** Logistic Regression, LDA, Decision Trees  
