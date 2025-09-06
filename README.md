@@ -22,7 +22,7 @@
 
 ### NLP for Low-Resource Language Machine Translation
 [View Project](https://github.com/ikramnaser/NLP-darija)  
-**Tech:** Python, TensorFlow, Hugging Face Transformers  
+**Tech:** Python, TensorFlow, Hugging Face Transformers, LLMs  
 **Summary:** Implemented NLP techniques for Darija (Moroccan Arabic), including data collection, cleaning, and sequence-to-sequence translation models.
 
 ---
