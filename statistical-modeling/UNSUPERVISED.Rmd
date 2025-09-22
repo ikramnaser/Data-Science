@@ -1,0 +1,263 @@
+---
+title: "Unsupervised SL"
+author: "Ikram Ait Taleb Naser"
+output: html_document
+---
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(devtools)
+library(ggplot2)
+library(reshape2)
+library(corrplot)
+library(FactoMineR)
+library(factoextra)
+library(cluster)
+library(ggthemes)
+
+
+
+```
+
+
+
+```{r}
+df <- read.csv("C:/Users/ikry/Downloads/archive (3)/data-fin.csv")
+dim(df)
+str(df)
+cat("NULL values count:",sum(is.null(df)),"\nNA values count:", sum(is.na(df)))
+```
+
+
+
+```{r}
+personality_traits <- c("EXT", "AGR", "CSN", "EST", "OPN")
+answer_columns <- paste0(rep(personality_traits, each = 10), 1:10)
+print(answer_columns)
+```
+
+```{r}
+df$EXT <- df$EXT1 - df$EXT2 + df$EXT3 - df$EXT4 + df$EXT5 - df$EXT6 + df$EXT7 - df$EXT8 + df$EXT9 - df$EXT10
+df$EST <- df$EST1 - df$EST2 + df$EST3 - df$EST4 + df$EST5 + df$EST6 + df$EST7 + df$EST8 + df$EST9 + df$EST10
+df$AGR <- - df$AGR1 + df$AGR2 - df$AGR3 + df$AGR4 - df$AGR5 + df$AGR6 - df$AGR7 + df$AGR8 + df$AGR9 + df$AGR10
+df$CSN <- df$CSN1 - df$CSN2 + df$CSN3 - df$CSN4 + df$CSN5 - df$CSN6 + df$CSN7 - df$CSN8 + df$CSN9 + df$CSN10
+df$OPN <- df$OPN1 - df$OPN2 + df$OPN3 - df$OPN4 + df$OPN5 - df$OPN6 + df$OPN7 - df$OPN8 + df$OPN9 + df$OPN10
+
+df_trait <- df[, c("EXT", "EST", "AGR", "CSN", "OPN")]
+
+```
+
+
+
+
+```{r}
+# Define the trait names
+trait_names <- c("EXT", "EST", "AGR", "CSN", "OPN")
+
+# Create question names for each trait
+question_names <- c()
+for (trait in trait_names) {
+  question_names <- c(question_names, paste0(trait, 1:10))
+}
+
+
+```
+
+
+```{r}
+#plotting trait scores
+traits <- c(
+  "EXT" = "Extroversion",
+  "EST" = "Neuroticism",
+  "AGR" = "Agreeableness",
+  "CSN" = "Conscientiousness",
+  "OPN" = "Openness"
+)
+
+
+layout(matrix(1:6, nrow = 3, byrow = TRUE))
+
+for (i in 1:length(traits)) {
+  # Subset the data for the current trait
+  trait_data <- df[[names(traits)[i]]]
+  
+  
+  hist <- ggplot(data = data.frame(trait_data), aes(x = trait_data)) +
+    geom_histogram(binwidth = 1, fill = "purple", color = "black") +
+    labs(title = traits[names(traits)[i]], x = NULL, y = "Count") +
+    ggtitle(names(traits)[i]) +
+    theme_minimal()
+  
+  
+  print(hist)
+}
+```
+
+
+```{r}
+#correlation
+
+correlation <- cor(df[, personality_traits])
+print(correlation)
+corrplot(correlation, type = "upper", tl.col = "black", tl.srt = 45)
+
+```
+
+```{r}
+#country distribution 
+
+
+countries <- data.frame(table(df$country))
+
+countries <- countries[order(-countries$Freq), ]
+top_countries <- head(countries, 15)
+
+# Reorder in ascending order of participant counts
+top_countries$Var1 <- reorder(top_countries$Var1, top_countries$Freq)
+
+
+ggplot(data = top_countries, aes(x = Var1, y = Freq)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  geom_text(aes(label = Freq), vjust = -0.5, size = 3) +  
+  labs(title = "Top 15 Countries by Number of Participants", y = "Participants") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  coord_flip()  
+
+
+
+```
+
+
+```{r}
+#how many clusters?
+
+
+data <- df %>% select(-c(country))
+scaled_data <- scale(data) 
+
+#since I cannot allocate a vector of size 2848 GB, we will work on a sample of 10000
+scaled <- as.data.frame(scaled_data)
+df_sample <- scaled[1:10000, ]
+
+#k-menoids
+fviz_nbclust(df_sample, pam, method = "wss") 
+
+
+
+```
+
+```{r}
+#K-Means
+
+# Remove the 'country' column and scale the data
+df_model <- df[, -which(names(df) == 'country')]
+
+# Define the number of clusters
+num_clusters <- 5
+
+# Fit K-means clustering model
+k_fit <- kmeans(df_model, centers = num_clusters)
+
+# Get cluster assignments
+predictions <- k_fit$cluster
+
+# Add cluster assignments to the data frame
+df_model$Clusters <- predictions
+head(df_model)
+
+
+
+# Summing up the different question groups
+ext <- colnames(df_model)[1:10]
+est <- colnames(df_model)[11:20]
+agr <- colnames(df_model)[21:30]
+csn <- colnames(df_model)[31:40]
+opn <- colnames(df_model)[41:50]
+
+# Calculate the sums for each question group
+data_sums <- data.frame(
+  extroversion = rowMeans(df_model[ext]),
+  neurotic = rowMeans(df_model[est]),
+  agreeable = rowMeans(df_model[agr]),
+  conscientious = rowMeans(df_model[csn]),
+  open = rowMeans(df_model[opn]),
+  clusters = predictions
+)
+
+# Group by clusters and calculate the mean for each cluster
+cluster_means <- aggregate(. ~ clusters, data = data_sums, FUN = mean)
+print(cluster_means)
+
+
+
+
+
+# Plotting the means of each cluster
+dataclusters_long <- tidyr::pivot_longer(cluster_means, cols = -clusters, names_to = "trait", values_to = "mean_value")
+
+
+ggplot(data = dataclusters_long, aes(x = trait, y = mean_value, fill = clusters)) +
+  geom_bar(stat = "identity", position = "dodge", width = 0.7) +
+  geom_text(aes(label = round(mean_value, 2)), position = position_dodge(width = 0.7), vjust = -0.5) +
+  facet_wrap(~clusters) +
+  labs(x = "Trait", y = "Mean Value", title = "Means for Each Cluster") +
+  theme_minimal()
+
+#plotting the clustering points
+set.seed(1)
+km1 <- kmeans(df_model, centers = 5, nstart = 25)
+
+fviz_cluster(km1, data = df_model, geom = "point", 
+             alpha = 0.5, show.clust.cent = TRUE) +  
+  theme_minimal() +
+  ggtitle("K-means Clustering with 5 Clusters") +
+  theme(legend.position = "right")
+
+
+
+```
+
+
+```{r}
+#PCA
+ 
+corr_matrix <- cor(scaled_data)
+
+pca_data <- princomp(corr_matrix)
+summary(pca_data)
+
+pca_data$loadings[, 1:2]
+fviz_eig(pca_data, addlabels = TRUE, barfill = "pink", barcolor = "#f0f0f0") + theme_fivethirtyeight()
+
+fviz_pca_var(pca_data, col.var = "black") + theme_fivethirtyeight()
+
+```
+
+
+```{r}
+
+pca_fit <- prcomp(df_model, center = TRUE, scale. = TRUE)
+
+df_pca <- predict(pca_fit)
+
+df_pca <- as.data.frame(df_pca)
+names(df_pca) <- c("PCA1", "PCA2")
+
+# Add cluster information
+df_pca$Clusters <- predictions
+head(df_pca)
+
+
+
+
+ggplot(data = df_pca, aes(x = PCA1, y = PCA2, color = factor(Clusters))) +
+  geom_point() +  # Scatterplot
+  labs(x = "PCA1", y = "PCA2", title = "PCA Scatterplot") +  
+  scale_color_manual(values = c("red", "blue", "green", "orange", "purple")) +
+  theme_minimal()
+
+```
+
+
+

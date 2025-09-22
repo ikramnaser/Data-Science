@@ -1,0 +1,1138 @@
+---
+title: "Supervised SL"
+author: "Ikram Ait Taleb Naser"
+output: html_document
+
+
+
+---
+
+
+
+
+
+
+#### Variables	Description
+
+-ID: Identification
+
+-Age:	Age range of participant
+
+-Gender:	Male or Female
+
+-Education:	Level of education
+
+-Country:	Country of orgin
+
+-Ethnicity:	Ethnicity/Race of participant
+
+-Nscore: Quantified NEO Five-Factor Inventory Neuroticism score
+
+-Escore: Quantified NEO Five-Factor Inventory Extraversion score
+
+-Oscore: Quantified NEO Five-Factor Inventory Openness to experience score
+
+-Ascore: Quantified NEO Five-Factor Inventory Agreeableness score
+
+-Cscore: Quantified NEO Five-Factor Inventory Conscientiousness score
+
+-Impulsive:	Quantified BIS-11 impulsiveness score
+
+-SS: Quantified Impulsive Sensation Seeking score
+
+-Drug:	Various drugs were examined and measured in terms of frequency of use
+
+
+```{r message=FALSE, warning=FALSE}
+
+library(devtools)
+library(tidyverse)
+library(pheatmap)
+library(reshape2)
+library(corrplot)
+library(pheatmap)
+library(dplyr)
+library(caret)
+library(pROC)
+library(MASS)
+library(rpart)
+library(rpart.plot)
+library(vip)
+
+
+
+```
+
+
+```{r cars}
+data1 <- read.csv("C:/Users/ikry/Downloads/archive (1)/Drug_Consumption.csv")
+dim(data1)
+```
+
+## 
+
+```{r}
+str(data1) #structure
+sum(duplicated(data1)) #duplicates
+
+
+```
+
+#### Encoding the features as the following:
+
+Age:
+
+0 = 18-24
+
+1 = 25-34
+
+2 = 35-44
+
+3 = 45-54
+
+4 = 55-64
+
+5 = 65+
+
+Gender:
+
+0 = F
+
+1 = M
+
+Education:
+
+0 = Left school before 16 years
+
+1 = Left school at 16 years
+
+2 = Left school at 17 years
+
+3 = Left school at 18 years
+
+4 = Some college or university, no certificate or degree
+
+5 = Professional certificate/ diploma
+
+6 = University degree
+
+7 = Masters degree
+
+8 = Doctorate degree
+
+Country:
+
+0 = Australia
+
+1 = Canada
+
+2 = New Zealand
+
+3 = Other
+
+4 = Republic of Ireland
+
+5 = UK
+
+6 = USA
+
+Ethincity:
+
+0 = Asian
+
+1 = Black
+
+2 = Mixed-Black/Asian
+
+3 = Mixed-White/Asian
+
+4 = Mixed-White/Black
+
+5 = Other
+
+6 = White
+
+Drug Use:
+
+0 = never used the drug
+
+1 = used it over a decade ago
+
+2 = in the last decade
+
+3 = used in the last year
+
+4 = used in the last month
+
+5 = used in the last week
+
+6 = used in the last day
+
+
+```{r}
+age_encoding <- c('18-24' = 0, '25-34' = 1, '35-44' = 2, '45-54' = 3, '55-64' = 4, '65+' = 5)
+data1 <- mutate(data1, Age = age_encoding[Age])
+
+gender_encoding <-c('M' = 1, 'F' = 0)
+data1 <- mutate(data1, Gender = gender_encoding[Gender])
+
+education_encoding <- c('Left school before 16 years' = 0, 'Left school at 16 years' = 1, 'Left school at 17 years' = 2, 'Left school at 18 years'= 3, 'Some college or university, no certificate or degree' = 4, 'Professional certificate/ diploma' = 5, 'University degree' = 6, 'Masters degree' = 7, 'Doctorate degree' = 8)
+data1 <- mutate(data1, Education = education_encoding[Education])
+
+country_encoding <- c('Australia' = 0, 'Canada' = 1, 'New Zealand' = 2, 'Other' = 3, 'Republic of Ireland' = 4, 'UK' = 5, 'USA' = 6)
+data1 <- mutate(data1, Country = country_encoding[Country])
+
+ethnicity_encoding <- c('Asian' = 0, 'Black' = 1, 'Mixed-Black/Asian' = 2, 'Mixed-White/Asian' = 3, 'Mixed-White/Black' = 4, 'Other' = 5, 'White' = 6)
+data1 <- mutate(data1, Ethnicity = ethnicity_encoding[Ethnicity])
+
+
+drugs <- c('Alcohol', 'Amyl', 'Amphet', 'Benzos', 'Choc', 'Caff', 
+           'Cannabis', 'Coke', 'Crack', 'Ecstasy', 'Heroin', 'Ketamine', 
+           'Legalh', 'LSD', 'Meth', 'Mushrooms', 'Nicotine','Semer', 'VSA')
+
+
+drug_use_encoding <- c('CL0' = 0, 'CL1' = 1, 'CL2' = 2, 'CL3' = 3, 'CL4' = 4, 'CL5' = 5, 'CL6' = 6)
+
+data1[, drugs] <- lapply(data1[, drugs], function(x) drug_use_encoding[x])
+
+# Convert the columns to integers
+data1[, drugs] <- lapply(data1[, drugs], as.integer)
+
+
+
+cat("NULL values count:",sum(is.null(data1)),"\nNA values count:", sum(is.na(data1)))
+
+```
+```{r}
+data_subset <- data1[, 14:32]
+
+data_long <- tidyr::gather(data_subset)
+
+ggplot(data_long, aes(x = value)) +
+  geom_histogram(color = "black", fill = "purple", bins = 30) +
+  labs(title = "Drug Usage Distributions") +
+  facet_wrap(~ key, scales = "free") +
+  theme_minimal()
+```
+
+```{r}
+data_subset <- data1[, 7:13]
+
+data_long <- tidyr::gather(data_subset)
+
+ggplot(data_long, aes(x = value)) +
+  geom_histogram(color = "black", fill = "purple", bins = 30) +
+  labs(title = "Personality Variable Distributions") +
+  facet_wrap(~ key, scales = "free") +
+  theme_minimal()
+```
+
+
+#### As we can see not all drugs have balanced frequencies of use, so in the following analysis I will only consider:
+
+
+ -Alcohol
+ 
+ -Benzos
+ 
+ -Nicotine
+ 
+ -Coke
+ 
+ -Ecstasy
+ 
+ -LSD
+ 
+ -Mushrooms
+ 
+ -Cannabis
+
+
+#### I split the dataset in legal and illegal datasets and encode the frequencies of use into a binary variables
+ 
+
+#### NON-USER (0):
+
+ -never used
+ 
+ -used over a decade ago
+
+#### USER (1):
+
+ -used in last day
+ 
+ -used in last week
+ 
+ -used in last month
+ 
+ -used in last year
+ 
+ -used in last decade
+
+
+
+
+
+```{r}
+#legal and illegal datasets
+
+illegal_df <- data1[c('Age', 'Gender', 'Education', 'Country', 'Ethnicity', 'Nscore',
+                     'Escore','Oscore', 'AScore','Cscore','Impulsive','SS',
+                     'Cannabis', 'Ecstasy', 'Mushrooms', 'Coke', 'LSD', 'Amphet', 'Amyl', 'Heroin', 'Ketamine',                           'Legalh', 'Meth', 'Crack', 'VSA')]
+
+
+legal_df <- data1[c('Age', 'Gender', 'Education', 'Country', 'Ethnicity', 'Nscore',
+                     'Escore','Oscore', 'AScore','Cscore','Impulsive','SS',
+                     'Alcohol', 'Nicotine', 'Benzos')]
+
+
+
+```
+
+```{r}
+# Legal and Illegal drugs correlations
+
+correlation_legal <- cor(legal_df)
+
+corrplot(correlation_legal, type = "upper", tl.col = "black", tl.srt = 45)
+
+
+correlation_illegal <- cor(illegal_df)
+correlation <- melt(correlation_illegal)
+
+ggplot(correlation, aes(Var1, Var2, fill = value)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0, limit = c(-1, 1), space = "Lab", name = "Correlation") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, size = 10, hjust = 1)) +
+  geom_text(aes(Var1, Var2, label = round(value, 2)), vjust = 1, size = 1.8) +
+  coord_fixed()
+
+
+
+```
+
+
+```{r}
+#let's see the correlations that matter
+
+significant_correlations <- correlation[abs(correlation$value) > 0.5 & abs(correlation$value) < 1.0, ]
+
+print(significant_correlations)
+
+
+```
+
+
+
+#### RESEARCH QUESTIONS?
+
+#### - What are the personality traits of illegal drug users and legal drug users?
+
+#### - Attributes that best classify each drug
+
+#### - Correlation between specific drugs consumption
+
+
+
+
+
+
+
+```{r}
+
+drug_col <- names(data1)[14:32]
+
+drugs <- data1[, drug_col]
+length(drugs)
+
+```
+
+
+
+```{r}
+
+cor_matrix <- cor(drugs)
+
+pheatmap(cor_matrix,
+         color = colorRampPalette(c("blue", "white", "red"))(100),
+         main = "Heatmap of Drug Correlations",
+         fontsize_row = 8, fontsize_col = 8)
+
+
+
+```
+
+
+
+```{r}
+summary_drugs <- sapply(drugs, summary)
+print(summary_drugs)
+
+```
+
+
+
+
+```{r}
+# ethnicity and country are very imbalanced
+table(data1$Ethnicity)
+table(data1$Country)
+
+#Ethnicity and Country will not be taken into account in this analysis
+
+#Semer is not a real drug so we will drop it 
+
+#Chocolate and Caffeine are 'different' type of drugs and, as seen in the correlation matrix, there are no strong correlations other drugs.
+
+df <- data1[, !(names(data1) %in% c("Semer", "Choc", "Caff"))]
+dim(df)
+
+
+
+```
+
+
+
+```{r warning=FALSE}
+
+
+
+drugs <- c("Amphet", "Amyl", "Cannabis", "Coke", "Crack", "Ecstasy", "Heroin", "Ketamine", "Legalh", "LSD", "Meth", "Mushrooms", "VSA")
+
+# Replace drug columns with binary categories
+data_cat_ill <- illegal_df %>%
+  mutate(across(drugs, ~ ifelse(as.numeric(.) %in% c(0, 1), 0, 1)))
+
+head(data_cat_ill)
+
+
+
+leg_drugs <- c("Alcohol", "Nicotine", "Benzos")
+
+
+# Replace drug columns with binary categories
+data_cat_leg <- legal_df %>%
+  mutate(across(leg_drugs, ~ ifelse(as.numeric(.) %in% c(0, 1), 0, 1)))
+
+head(data_cat_leg)
+
+all_drugs <- c("Alcohol", "Nicotine", "Benzos", "Amphet", "Amyl", "Cannabis", "Coke", "Crack", "Ecstasy", "Heroin", "Ketamine", "Legalh", "LSD", "Meth", "Mushrooms", "VSA") 
+
+ds_cat <- df %>%
+  mutate(across(all_drugs, ~ ifelse(as.numeric(.) %in% c(0, 1), 0, 1)))
+
+
+
+
+```
+
+
+
+
+```{r}
+preprocessing_inputs <- function(data, column) {
+  data <- data
+  
+  y <- data[[column]]
+  X <- data[, !(names(df) %in% column)]
+  
+  set.seed(1)
+  train_indices <- sample(1:nrow(X), size = round(0.8 * nrow(X)))
+  X_train <- X[train_indices, ]
+  X_test <- X[-train_indices, ]
+  y_train <- y[train_indices]
+  y_test <- y[-train_indices]
+  
+  scaler <- scale
+  scaler$fit(X_train)
+  X_train <- as.data.frame(scaler$transform(X_train))
+  X_test <- as.data.frame(scaler$transform(X_test))
+  
+  return(list(X_train = X_train, X_test = X_test, y_train = y_train, y_test = y_test))
+}
+
+plot_confusion_matrix <- function(y, y_predict) {
+  cm <- table(y, y_predict)
+  heatmap(cm, annot = TRUE, fmt = "g", col = "Blues",
+          xlab = "Predicted labels", ylab = "True labels",
+          main = "Confusion Matrix")
+}
+
+
+```
+
+
+## Logistic Regression
+
+
+
+```{r}
+#ALCOHOL USER
+
+set.seed(123)
+split_train_test <- createDataPartition(data_cat_leg$Alcohol,p=0.8,list=FALSE)
+dtrain_alc<- data_cat_leg[split_train_test,]
+dtest_alc<-  data_cat_leg[-split_train_test,]
+```
+
+
+
+```{r}
+
+logit_model_alc <- glm(Alcohol ~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS,
+                   data = dtrain_alc, family = "binomial")
+
+summary(logit_model_alc)
+
+```
+
+```{r}
+
+#Confusion matrix
+lr_prob1 <- predict(logit_model_alc, dtest_alc, type="response")
+lr_pred1 <- ifelse(lr_prob1 > 0.5,"Yes","No")
+table(Predicted = lr_pred1, Actual = dtest_alc$Alcohol)
+```
+```{r}
+accuracy_alc <- (0+363)/376
+accuracy_alc
+```
+```{r}
+
+# Predict probabilities on the test set
+probabilities <- predict(logit_model_alc, newdata = dtest_alc, type = "response")
+
+# ROC curve
+roc_curve <- roc(dtest_alc$Alcohol, probabilities)
+
+
+plot(roc_curve, main = "ROC Curve", col = "blue", lwd = 2)
+legend("bottomright", legend = c("AUC = " , round(auc(roc_curve), 2)),
+       col = "blue", lwd = 2)
+abline(a = 0, b = 1, lty = 2, col = "red")
+
+
+cat("AUC:", auc(roc_curve))
+
+```
+```{r}
+#BENZOS USER
+set.seed(123)
+split_benzos <- createDataPartition(data_cat_leg$Benzos,p=0.8,list=FALSE)
+dtrain_benzos<- data_cat_leg[split_benzos,]
+dtest_benzos<-  data_cat_leg[-split_benzos,]
+
+
+
+logit_model_benzos <- glm(Benzos ~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS,
+                   data = dtrain_benzos, family = "binomial")
+summary(logit_model_benzos)
+
+```
+
+```{r}
+#Confusion matrix
+lr_prob1 <- predict(logit_model_benzos, dtest_benzos, type="response")
+lr_pred1 <- ifelse(lr_prob1 > 0.5,"Yes","No")
+table(Predicted = lr_pred1, Actual = dtest_benzos$Benzos)
+```
+
+```{r}
+accuracy_benzos <- (181+72)/376
+accuracy_benzos
+```
+```{r}
+
+# Predict probabilities on the test set
+probabilities <- predict(logit_model_benzos, newdata = dtest_benzos, type = "response")
+
+# ROC curve
+roc_curve <- roc(dtest_benzos$Benzos, probabilities)
+
+plot(roc_curve, main = "ROC Curve", col = "blue", lwd = 2)
+legend("bottomright", legend = c("AUC = " , round(auc(roc_curve), 2)),
+       col = "blue", lwd = 2)
+abline(a = 0, b = 1, lty = 2, col = "red")
+
+cat("AUC:", auc(roc_curve))
+
+```
+
+```{r}
+#NICOTINE USER
+
+set.seed(123)
+split_nic <- createDataPartition(data_cat_leg$Nicotine,p=0.8,list=FALSE)
+dtrain_nic<- data_cat_leg[split_nic,]
+dtest_nic<-  data_cat_leg[-split_nic,]
+
+logit_model_nic <- glm(Nicotine ~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS,
+                          data = dtrain_benzos, family = "binomial")
+summary(logit_model_nic)
+```
+
+```{r}
+#Confusion matrix
+lr_prob1 <- predict(logit_model_nic, dtest_nic, type="response")
+lr_pred1 <- ifelse(lr_prob1 > 0.5,"Yes","No")
+table(Predicted = lr_pred1, Actual = dtest_nic$Nicotine)
+
+accuracy_nic <- (37+224)/376
+accuracy_nic
+```
+```{r}
+# Predict probabilities on the test set
+probabilities <- predict(logit_model_nic, newdata = dtest_nic, type = "response")
+
+# ROC curve
+roc_curve <- roc(dtest_nic$Nicotine, probabilities)
+
+plot(roc_curve, main = "ROC Curve", col = "blue", lwd = 2)
+legend("bottomright", legend = c("AUC = " , round(auc(roc_curve), 2)),
+       col = "blue", lwd = 2)
+abline(a = 0, b = 1, lty = 2, col = "red")
+
+cat("AUC:", auc(roc_curve))
+
+```
+
+
+```{r}
+
+#COKE USER
+
+set.seed(123)
+split_coke <- createDataPartition(data_cat_ill$Coke,p=0.8,list=FALSE)
+dtrain_coke<- data_cat_ill[split_coke,]
+dtest_coke<-  data_cat_ill[-split_coke,]
+```
+
+
+```{r}
+# Fit the logistic regression model for COKE USER
+logit_model_coke <- glm(Coke ~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS,
+                   data = dtrain_coke, family = "binomial")
+
+summary(logit_model_coke)
+
+
+```
+
+
+```{r}
+#Confusion matrix
+lr_prob1 <- predict(logit_model_coke, dtest_coke, type="response")
+lr_pred1 <- ifelse(lr_prob1 > 0.5,"Yes","No")
+table(Predicted = lr_pred1, Actual = dtest_coke$Coke)
+```
+```{r}
+accuracy_coke <- (200+51)/376
+accuracy_coke
+```
+
+```{r}
+
+# Predict probabilities on the test set
+probabilities <- predict(logit_model_coke, newdata = dtest_coke, type = "response")
+
+# ROC curve
+roc_curve <- roc(dtest_coke$Coke, probabilities)
+
+plot(roc_curve, main = "ROC Curve", col = "blue", lwd = 2)
+legend("bottomright", legend = c("AUC = " , round(auc(roc_curve), 2)),
+       col = "blue", lwd = 2)
+abline(a = 0, b = 1, lty = 2, col = "red")
+
+cat("AUC:", auc(roc_curve))
+
+```
+
+
+
+```{r}
+#Ecstasy USER
+
+set.seed(123)
+split_ecstasy <- createDataPartition(data_cat_ill$Ecstasy,p=0.8,list=FALSE)
+dtrain_ecst<- data_cat_ill[split_ecstasy,]
+dtest_ecst<-  data_cat_ill[-split_ecstasy,]
+
+```
+
+
+```{r}
+# Fit the logistic regression model for ECST USER
+logit_model_ecst <- glm(Ecstasy ~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS ,
+                   data = dtrain_ecst, family = "binomial")
+
+summary(logit_model_ecst)
+```
+
+```{r}
+#Confusion matrix
+lr_prob1 <- predict(logit_model_ecst, dtest_ecst, type="response")
+lr_pred1 <- ifelse(lr_prob1 > 0.5,"Yes","No")
+table(Predicted = lr_pred1, Actual = dtest_ecst$Ecstasy)
+```
+```{r}
+accuracy_ecstasy <- (188+83)/376
+accuracy_ecstasy
+```
+
+
+
+```{r}
+
+
+# Predict probabilities on the test set
+probabilities <- predict(logit_model_ecst, newdata = dtest_ecst, type = "response")
+
+# ROC curve
+roc_curve <- roc(dtest_ecst$Ecstasy, probabilities)
+
+plot(roc_curve, main = "ROC Curve", col = "blue", lwd = 2)
+legend("bottomright", legend = c("AUC = " , round(auc(roc_curve), 2)),
+       col = "blue", lwd = 2)
+abline(a = 0, b = 1, lty = 2, col = "red")
+
+cat("AUC:", auc(roc_curve))
+
+```
+
+
+
+
+
+```{r}
+#CANNABIS USER
+
+set.seed(123)
+split_cannab <- createDataPartition(data_cat_ill$Cannabis,p=0.8,list=FALSE)
+dtrain_cannab<- data_cat_ill[split_cannab,]
+dtest_cannab<-  data_cat_ill[-split_cannab,]
+
+```
+```{r}
+logit_model_cannab <- glm(Cannabis ~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS,
+                   data = dtrain_cannab, family = "binomial")
+
+summary(logit_model_cannab)
+
+```
+```{r}
+#Confusion matrix
+lr_prob1 <- predict(logit_model_cannab, dtest_cannab, type="response")
+lr_pred1 <- ifelse(lr_prob1 > 0.5,"Yes","No")
+table(Predicted = lr_pred1, Actual = dtest_cannab$Cannabis)
+```
+```{r}
+accuracy_cannabis <- (65+217)/376
+accuracy_cannabis
+```
+
+
+```{r}
+
+# Predict probabilities on the test set
+probabilities <- predict(logit_model_cannab, newdata = dtest_cannab, type = "response")
+
+# ROC curve
+roc_curve <- roc(dtest_cannab$Cannabis, probabilities)
+
+plot(roc_curve, main = "ROC Curve", col = "blue", lwd = 2)
+legend("bottomright", legend = c("AUC = " , round(auc(roc_curve), 2)),
+       col = "blue", lwd = 2)
+abline(a = 0, b = 1, lty = 2, col = "red")
+
+
+cat("AUC:", auc(roc_curve))
+
+```
+
+
+```{r}
+#LSD USER
+
+set.seed(123)
+split_lsd <- createDataPartition(data_cat_ill$LSD,p=0.8,list=FALSE)
+dtrain_lsd<- data_cat_ill[split_lsd,]
+dtest_lsd<-  data_cat_ill[-split_lsd,]
+
+```
+```{r}
+logit_model_lsd <- glm(LSD ~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS,
+                   data = dtrain_lsd, family = "binomial")
+
+summary(logit_model_lsd)
+
+```
+
+```{r}
+#Confusion matrix
+lr_prob1 <- predict(logit_model_lsd, dtest_lsd, type="response")
+lr_pred1 <- ifelse(lr_prob1 > 0.5,"Yes","No")
+table(Predicted = lr_pred1, Actual = dtest_lsd$LSD)
+```
+
+
+```{r}
+accuracy_lsd <- (237+41)/376
+accuracy_lsd
+```
+
+```{r}
+
+# Predict probabilities on the test set
+probabilities <- predict(logit_model_lsd, newdata = dtest_lsd, type = "response")
+
+# ROC curve
+roc_curve <- roc(dtest_lsd$LSD, probabilities)
+
+
+plot(roc_curve, main = "ROC Curve", col = "blue", lwd = 2)
+legend("bottomright", legend = c("AUC = " , round(auc(roc_curve), 2)),
+       col = "blue", lwd = 2)
+abline(a = 0, b = 1, lty = 2, col = "red")
+
+
+cat("AUC:", auc(roc_curve))
+
+```
+```{r}
+#MUSHROOMS USER
+
+split_mush <- createDataPartition(data_cat_ill$Mushrooms,p=0.8,list=FALSE)
+dtrain_mush<- data_cat_ill[split_mush,]
+dtest_mush<-  data_cat_ill[-split_mush,]
+
+
+
+logit_model_mush <- glm(Mushrooms ~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS,
+                          data = dtrain_mush, family = "binomial")
+summary(logit_model_mush)
+```
+```{r}
+#Confusion matrix
+lr_prob1 <- predict(logit_model_mush, dtest_mush, type="response")
+lr_pred1 <- ifelse(lr_prob1 > 0.5,"Yes","No")
+table(Predicted = lr_pred1, Actual = dtest_mush$Mushrooms)
+```
+
+```{r}
+accuracy_mush <- (205+57)/376
+accuracy_mush
+```
+```{r}
+# Predict probabilities on the test set
+probabilities <- predict(logit_model_mush, newdata = dtest_mush, type = "response")
+
+#  ROC curve
+roc_curve <- roc(dtest_mush$Mushrooms, probabilities)
+
+
+plot(roc_curve, main = "ROC Curve", col = "blue", lwd = 2)
+legend("bottomright", legend = c("AUC = " , round(auc(roc_curve), 2)),
+       col = "blue", lwd = 2)
+
+abline(a = 0, b = 1, lty = 2, col = "red")
+
+
+cat("AUC:", auc(roc_curve))
+
+```
+
+
+
+
+
+
+## Linear Discriminant Analysis
+
+
+```{r}
+#LDA ALCOHOL
+
+lda.fit_alc=lda(Alcohol~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS,data = dtrain_alc)
+lda.fit_alc
+
+plot(lda.fit_alc)
+
+
+```
+```{r}
+lda.pred_alc = predict(lda.fit_alc,dtest_alc)$class
+table(lda.pred_alc,dtest_alc$Alcohol)
+```
+```{r}
+mean(lda.pred_alc==dtest_alc$Alcohol)
+```
+
+```{r}
+#LDA BENZOS
+
+lda.fit_benz=lda(Benzos~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS,data = dtrain_benzos)
+lda.fit_benz
+
+plot(lda.fit_benz)
+
+```
+```{r}
+lda.pred_benz = predict(lda.fit_benz,dtest_benzos)$class
+table(lda.pred_benz,dtest_benzos$Benzos)
+```
+```{r}
+mean(lda.pred_benz==dtest_benzos$Benzos)
+```
+```{r}
+#LDA nicotine
+
+lda.fit_nic=lda(Nicotine~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS,data = dtrain_nic)
+lda.fit_nic
+
+plot(lda.fit_nic)
+```
+```{r}
+lda.pred_nic = predict(lda.fit_nic,dtest_nic)$class
+table(lda.pred_nic,dtest_nic$Nicotine) 
+```
+```{r}
+mean(lda.pred_nic==dtest_nic$Nicotine)
+```
+
+
+```{r}
+#LDA Coke
+
+lda.fit_coke=lda(Coke~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS,data = dtrain_coke)
+lda.fit_coke
+```
+
+```{r}
+plot(lda.fit_coke)
+
+```
+
+```{r}
+lda.pred_coke = predict(lda.fit_coke,dtest_coke)$class
+table(lda.pred_coke,dtest_coke$Coke) 
+```
+```{r}
+mean(lda.pred_coke==dtest_coke$Coke)  
+
+```
+
+```{r}
+#LDA cannabis
+lda.fit_cannab = lda(Cannabis~Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS ,data = dtrain_cannab)
+lda.fit_cannab
+
+plot(lda.fit_cannab)
+
+
+```
+```{r}
+lda.pred_cannab=predict(lda.fit_cannab,dtest_cannab)$class
+table(lda.pred_cannab,dtest_cannab$Cannabis)
+```
+```{r}
+mean(lda.pred_cannab==dtest_cannab$Cannabis)  
+
+```
+
+```{r}
+#LDA Ecstasy
+
+lda.fit_ecst = lda(Ecstasy~Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS ,data = dtrain_ecst)
+lda.fit_ecst
+
+plot(lda.fit_ecst)
+
+
+```
+```{r}
+lda.pred_ecst = predict(lda.fit_cannab,dtest_cannab)$class
+table(lda.pred_ecst,dtest_ecst$Ecstasy)
+```
+```{r}
+mean(lda.pred_ecst==dtest_ecst$Ecstasy)  
+
+```
+
+```{r}
+#LDA LSD
+
+lda.fit_lsd = lda(LSD ~Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS ,data = dtrain_lsd)
+lda.fit_lsd
+
+plot(lda.fit_lsd)
+
+
+```
+```{r}
+lda.pred_lsd = predict(lda.fit_lsd,dtest_lsd)$class
+table(lda.pred_lsd,dtest_lsd$LSD)
+```
+```{r}
+mean(lda.pred_lsd==dtest_lsd$LSD)  
+
+```
+
+
+```{r}
+#LDA Mushrooms
+
+lda.fit_mush = lda(Mushrooms~Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS ,data = dtrain_mush)
+lda.fit_mush
+
+plot(lda.fit_mush)
+
+
+```
+```{r}
+lda.pred_mush = predict(lda.fit_mush,dtest_mush)$class
+table(lda.pred_mush,dtest_mush$Mushrooms)
+```
+```{r}
+mean(lda.pred_mush==dtest_mush$Mushrooms)  
+
+```
+
+
+
+
+
+
+
+## Decision Tree
+
+
+```{r}
+#ALCOHOL TREE
+
+rtree_alc <-rpart(Alcohol ~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS, data= dtrain_alc, cp=0.01)
+printcp(rtree_alc)
+```
+```{r}
+rpart.plot(rtree_alc)
+
+```
+
+```{r}
+
+var_importance_alc <- vip::vip(rtree_alc, num_features = 5)
+print(var_importance_alc)
+```
+
+```{r}
+#BENZOS TREE
+
+
+rtree_benz<-rpart(Benzos ~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS, data= dtrain_benzos, cp=0.01)
+printcp(rtree_benz)
+```
+```{r}
+rpart.plot(rtree_benz)
+
+```
+```{r}
+var_importance_benz <- vip::vip(rtree_benz, num_features = 5)
+print(var_importance_benz)
+```
+
+```{r}
+#NICOTINE TREE
+
+
+rtree_nic<-rpart(Nicotine ~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS, data= dtrain_nic, cp=0.01)
+printcp(rtree_nic)
+```
+```{r}
+rpart.plot(rtree_nic)
+
+```
+```{r}
+var_importance_nic <- vip::vip(rtree_nic, num_features = 5)
+print(var_importance_nic)
+```
+
+```{r}
+#COKE TREE
+
+
+rtree_coke<-rpart(Coke ~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS, data= dtrain_coke, cp=0.01)
+printcp(rtree_coke)
+```
+```{r}
+rpart.plot(rtree_coke)
+
+```
+```{r}
+var_importance_coke <- vip::vip(rtree_coke, num_features = 5)
+print(var_importance_coke)
+```
+
+```{r}
+#ECSTASY TREE
+
+
+rtree_ecst<-rpart(Ecstasy ~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS, data= dtrain_ecst, cp=0.01)
+printcp(rtree_ecst)
+```
+```{r}
+rpart.plot(rtree_ecst)
+
+```
+```{r}
+var_importance_ecst <- vip::vip(rtree_ecst, num_features = 5)
+print(var_importance_ecst)
+```
+
+```{r}
+#LSD TREE
+
+
+rtree_lsd<-rpart(LSD ~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS, data= dtrain_lsd, cp=0.01)
+printcp(rtree_lsd)
+```
+```{r}
+rpart.plot(rtree_lsd)
+
+```
+
+```{r}
+var_importance_lsd <- vip::vip(rtree_lsd, num_features = 5)
+print(var_importance_lsd)
+```
+
+```{r}
+#MUSHROOMS TREE
+
+
+rtree_mush<-rpart(Mushrooms ~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS, data= dtrain_mush, cp=0.01)
+printcp(rtree_mush)
+```
+```{r}
+rpart.plot(rtree_mush)
+
+```
+```{r}
+var_importance_mush <- vip::vip(rtree_mush, num_features = 5)
+print(var_importance_mush)
+```
+
+```{r}
+#CANNABIS TREE
+
+
+rtree_cann<-rpart(Cannabis ~ Nscore + Escore + Oscore + AScore + Cscore + Impulsive + SS, data= dtrain_cannab, cp=0.01)
+printcp(rtree_cann)
+```
+```{r}
+rpart.plot(rtree_cann)
+
+```
+```{r}
+var_importance_cann <- vip::vip(rtree_cann, num_features = 5)
+print(var_importance_cann)
+```
