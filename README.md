@@ -35,7 +35,7 @@
 ---
 
 ### Deep Learning for Image Classification
-[View Project](https://github.com/ikramnaser/Data-Science/tree/main/deep%20learning)  
+[View Project](https://github.com/ikramnaser/Data-Science/tree/main/deep%20learning%20for%20computer%20vision)  
 **Tech:** Python, TensorFlow/Keras, CNN  
 **Summary:** Trained a deep neural network to classify book covers, using advanced preprocessing, augmentation, and hyperparameter tuning for better generalization.
 
