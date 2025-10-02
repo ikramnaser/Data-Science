@@ -1,6 +1,6 @@
 # Data Science & Machine Learning Portfolio
 
-> A curated portfolio showcasing my applied projects in NLP, Deep Learning, and Data Science.
+> This is my curated Portfolio showcasing all the Data Science and Machine Learning projects I have done for academic, self-learning and hobby purposes
 
 ---
 
