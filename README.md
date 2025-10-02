@@ -1,4 +1,4 @@
-# Data Science & Machine Learning Portfolio
+# Data Science Portfolio
 
 > This is my curated Portfolio showcasing all the Data Science and Machine Learning projects I have done for academic, self-learning and hobby purposes
 
