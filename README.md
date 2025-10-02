@@ -4,63 +4,156 @@
 
 ---
 
-## Projects
+# Projects
 
-### Document Intelligence SaaS Platform
-[View Project](https://github.com/ikramnaser/mySaaS)  
-**Tech:** Python, FastAPI, SpaCy, Tesseract OCR, Google Cloud Run  
-**Summary:** Full-stack application for automated document processing. Extracts text from PDFs/images, classifies documents, and identifies named entities.
+<table>
+<tr>
+<td width="30%">
+<img src="https://github.com/user-attachments/assets/12a6b657-fd5f-46bd-8d05-6d39f8423a1d" alt="Document Intelligence" width="100%"/>
+</td>
+<td width="70%">
 
----
+### [Document Intelligence SaaS Platform](https://github.com/ikramnaser/mySaaS)
 
-### Financial Analysis and Portfolio Optimization
-[View Project](https://github.com/ikramnaser/Data-Science/tree/main/investment-portfolio-optimization)  
-**Tech:** Python, Pandas, NumPy, Matplotlib, Seaborn, yfinance, SciPy  
-**Summary:** Analyzed 5 years of stock data for 500 companies, visualized correlations & returns, and built portfolio optimization models using Monte Carlo simulations and Sharpe ratio maximization.
+Full-stack application for automated document processing. Extracts text from PDFs/images, classifies documents, and identifies named entities. Designed to help companies automate document workflows, reducing manual processing time by up to 80%. Plug-and-play interface: upload your document, and the platform handles parsing, classification, and entity extraction in real time.
 
----
+**Tools & Skills:** Python, FastAPI, SpaCy, Tesseract OCR, Google Cloud Run
 
-### NLP for Low-Resource Language Machine Translation
-[View Project](https://github.com/ikramnaser/NLP-darija)  
-**Tech:** Python, TensorFlow, Hugging Face Transformers, LLMs  
-**Summary:** Implemented NLP techniques for Darija (Moroccan Arabic), including data collection, cleaning, and sequence-to-sequence translation models.
+</td>
+</tr>
+</table>
 
----
+<table>
+<tr>
+<td width="30%">
+<img src="https://github.com/user-attachments/assets/46a581e8-96db-4f90-9c72-295f0d2036b3" alt="Financial Portfolio" width="100%"/>
+</td>
+<td width="70%">
 
-### Cloud-Deployed Predictive Healthcare API
-[View Project](https://github.com/ikramnaser/Deploy-ML-Models-on-Google-Cloud-Platform)  
-**Tech:** Python, Scikit-learn, FastAPI, Google Cloud Platform (GCP)  
-**Summary:** Deployed a ML model to predict heart attack risk from clinical data. Includes end-to-end pipeline: data analysis, model training, and API deployment.
+### [Financial Analysis and Portfolio Optimization](https://github.com/ikramnaser/Data-Science/tree/main/investment-portfolio-optimization) 
 
----
+Analyzed 5 years of stock data for 500 companies, visualized correlations, price history & returns.
+Performed Efficient Frontier analysis with Monte Carlo simulations to optimize portfolios.
+Calculated Sharpe ratios to identify risk-adjusted optimal investments.
 
-### Deep Learning for Image Classification
-[View Project](https://github.com/ikramnaser/Data-Science/tree/main/deep%20learning%20for%20computer%20vision)  
-**Tech:** Python, TensorFlow/Keras, CNN  
-**Summary:** Trained a deep neural network to classify book covers, using advanced preprocessing, augmentation, and hyperparameter tuning for better generalization.
+**Tools & Skills:** Python, Pandas, NumPy, Matplotlib, Seaborn, yfinance, SciPy
 
----
+</td>
+</tr>
+</table>
 
-### Web Data Extraction and Fact-Checking
-[View Project](https://github.com/ikramnaser/web-data-processing)  
-**Tech:** Python, LLaMA2, BERT, Hugging Face, Wikidata API, llama.cpp  
-**Summary:** Built a system using LLaMA2 to answer questions and verify facts. Includes entity linking to Wikipedia/Wikidata for evidence-based validation.
+<table>
+<tr>
+<td width="30%">
+<img src="https://github.com/user-attachments/assets/55661246-46f9-4ae1-8bea-d6ed25d847be" alt="PCA" width="100%"/>
+</td>
+<td width="70%">
 
----
+### [Personality Traits and Drug Consumption Analysis](https://github.com/ikramnaser/Data-Science/tree/main/statistical-modeling)
 
-### Algorithm Implementation: Decision Tree from Scratch
-[View Project](https://github.com/ikramnaser/Data-Science/tree/main/machine%20learning)  
-**Tech:** Python, NumPy, Algorithms  
-**Summary:** Implemented a decision tree classifier from scratch, including entropy calculation, information gain, and recursive splitting.
-
----
-
-### Personality Traits and Drug Consumption Analysis
-[View Project](https://github.com/ikramnaser/Data-Science/tree/main/statistical-modeling)  
-**Tech:** R, PCA, Logistic Regression, Decision Trees, LDA  
-**Summary:** Explored relationships between personality traits and drug use.  
-- **Unsupervised learning:** PCA + K-Means to identify personality profiles.  
+Can your personality predict what substances you’re likely to use?
+Here I am exploring the relationships between personality traits and drug using statistical learning.
+- **Unsupervised learning:** PCA + K-Means to identify personality profiles.
 - **Supervised learning:** Logistic Regression, LDA, and Decision Trees to predict substance use.
+
+**Tools & Skills:** R, PCA, Logistic Regression, Decision Trees, LDA
+
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td width="30%">
+<img src="https://github.com/user-attachments/assets/60bc9b5b-2ae8-4e8c-91b3-0e7494dc0e0a" alt="NLP Translation" width="100%"/>
+</td>
+<td width="70%">
+
+
+### [NLP for Low-Resource Languages](https://github.com/ikramnaser/NLP-darija)
+
+Explored NLP techniques for Moroccan Darija, a low-resource language, focusing on machine translation to English.
+Analyzed LLM performance (GPT-4, Claude) on sentence-level translation, idiomatic expressions, sarcasm, and code-switched text.
+Designed and evaluated prompt engineering strategies, syntax parsing, and human + automatic metrics to assess translation quality.
+
+**Tools & Skills:** Python, TensorFlow, Hugging Face Transformers, LLMs
+
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td width="30%">
+<img src="https://github.com/user-attachments/assets/908f2e1a-548c-42bc-95a4-0d582e071f75" alt="Healthcare API" width="100%"/>
+</td>
+<td width="70%">
+
+### [Cloud-Deployed Predictive Healthcare API](https://github.com/ikramnaser/Deploy-ML-Models-on-Google-Cloud-Platform)
+
+Developed a ML model to predict heart disease risk from patient clinical data using a Decision Tree classifier.
+Implemented end-to-end workflow: data preprocessing, model training, evaluation, and real-time inference via a REST API.
+Deployed the API on Google Cloud Platform with containerization and Swagger documentation for scalable, public access.
+
+**Tools & Skills:** Python, Scikit-learn, FastAPI, Google Cloud Platform (GCP)
+
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td width="30%">
+<img src="https://github.com/user-attachments/assets/a365ab97-05ec-45b1-98b6-867faa78a1ef" alt="CNN" width="100%"/>
+</td>
+<td width="70%">
+
+### [Deep Learning for Image Classification](https://github.com/ikramnaser/Data-Science/tree/main/deep%20learning%20for%20computer%20vision)
+
+Trained a deep neural network to classify book covers into 10 genres using CNNs and transfer learning (MobileNetV2). Designed the trainig workflow using advanced preprocessing for image data, data augmentation, and hyperparameter tuning for better generalization. 
+Achieved 44.7% test accuracy and 0.39 macro F1 on ~73,000 covers
+
+**Tools & Skills:** Python, TensorFlow/Keras, CNN
+
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td width="30%">
+<img src="https://github.com/user-attachments/assets/a4bfb0c0-7084-482c-a9a7-824fe6806a64" alt="Fact-check" width="100%"/>
+</td>
+<td width="70%">
+
+### [Web Data Extraction and Fact-Checking](https://github.com/ikramnaser/web-data-processing)
+
+Built a system using LLaMA2 to answer questions and verify facts. Includes entity linking to Wikipedia/Wikidata for evidence-based validation.
+
+**Tools & Skills:** Python, LLaMA2, BERT, Hugging Face, Wikidata API, llama.cpp
+
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td width="30%">
+<img src="https://github.com/user-attachments/assets/710e529c-e1a2-47aa-9e9c-b9d306d2f491" alt="Decision Tree" width="100%"/>
+</td>
+<td width="70%">
+
+### [Algorithm Implementation: Decision Tree from Scratch](https://github.com/ikramnaser/Data-Science/tree/main/machine%20learning)
+
+Implemented a decision tree classifier to predict mushroom edibility from scratch, including entropy calculation, information gain, and recursive splitting. Achieved 90.3% test accuracy (precision: 0.9413,
+recall: 0.8828, f1_score: 0.9111)
+
+**Tools & Skills:** Python, NumPy, Algorithms
+
+</td>
+</tr>
+</table>
+
 
 ---
 
