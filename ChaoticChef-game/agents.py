@@ -182,7 +182,7 @@ class ApproxQLearningAgent:
     This is a lightweight DQN-style learner without replay buffer or target network.
     """
 
-    def __init__(self, action_space_n: int, feature_dim: int, lr: float = 1e-3, gamma: float = 0.99,
+    def __init__(self, action_space_n: int, feature_dim: int, lr: float = 5e-4, gamma: float = 0.99,
                  epsilon: float = 0.1, epsilon_min: float = 0.01, epsilon_decay: float = None,
                  device: str = None, batch_size: int = 32):
         self.action_space_n = action_space_n
