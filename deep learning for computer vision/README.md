@@ -1,6 +1,6 @@
 # Deep Learning for Book Cover Classification  
 
-This project applies **deep neural networks and transfer learning** to classify book covers into **10 genres** using the [Amazon Books Review dataset](https://www.kaggle.com/datasets/mohamedbakhet/amazon-books-reviews).  
+This project applies **deep neural networks and transfer learning** to classify book covers into **10 genres** using the [Amazon Books Review dataset](https://www.kaggle.com/datasets/mohamedbakhet/amazon-books-reviews) (3M reviews; 221,998 books)
 
 I designed a scalable training pipeline with caching, subsampling, and a two-stage fine-tuning strategy using **MobileNetV2**.  
 
