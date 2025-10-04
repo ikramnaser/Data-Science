@@ -19,7 +19,7 @@ To explore how **state complexity and resource constraints** affect RL agent per
 
 ### **Evaluation**
 
-- Both agents were trained on the `ChaoticChef` environment for 100,000 episodes.
+- Both agents were trained on both `ChaoticChef` and `BudgetChef` environments for 100,000 episodes.
 - The project demonstrates the trade-offs between tabular and approximate methods in a complex state space.
 - Analysis of episode returns, episode length, invalid, cooking rewards to assess agent behavior and learning stability.
 
