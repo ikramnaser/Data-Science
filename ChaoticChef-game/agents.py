@@ -3,7 +3,6 @@ import random
 import numpy as np
 import torch
 import torch.nn as nn
-import torch.nn.functional as F 
 import torch.optim as optim
 
 
@@ -165,11 +164,11 @@ class MLP(nn.Module):
     def __init__(self, in_dim: int, out_dim: int):
         super().__init__()
         self.net = nn.Sequential(
-            nn.Linear(in_dim, 128),  
+            nn.Linear(in_dim, 128),
             nn.ReLU(),
             nn.Linear(128, 128),
             nn.ReLU(),
-            nn.Linear(128, out_dim)  
+            nn.Linear(128, out_dim)
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -177,14 +176,11 @@ class MLP(nn.Module):
 
 
 class ApproxQLearningAgent:
-    """Neural approximate Q-learning (online TD(0) with an MLP; epsilon-greedy).
+    """Neural approximate Q-learning (online TD(0) with an MLP; epsilon-greedy)."""
 
-    This is a lightweight DQN-style learner without replay buffer or target network.
-    """
-
-    def __init__(self, action_space_n: int, feature_dim: int, lr: float = 5e-4, gamma: float = 0.99,
+    def __init__(self, action_space_n: int, feature_dim: int, lr: float = 1e-4, gamma: float = 0.99,
                  epsilon: float = 0.1, epsilon_min: float = 0.01, epsilon_decay: float = None,
-                 device: str = None, batch_size: int = 32):
+                 device: str = None, batch_size: int = 32, buffer_max: int = 20000):
         self.action_space_n = action_space_n
         self.gamma = gamma
         self.epsilon = epsilon
@@ -193,17 +189,16 @@ class ApproxQLearningAgent:
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
         self.batch_size = batch_size
 
-        # Pre-allocate tensors on device
-        self.feat_tensor = torch.zeros(1, feature_dim, device=self.device)
-        self.next_feat_tensor = torch.zeros(1, feature_dim, device=self.device)
-        self.reward_tensor = torch.zeros(1, device=self.device)
-
         # Move network to device immediately
         self.qnet = MLP(feature_dim, action_space_n).to(self.device)
+        self.target_qnet = MLP(feature_dim, action_space_n).to(self.device)
+        self.target_qnet.load_state_dict(self.qnet.state_dict())
+        self.update_counter = 0
         self.optimizer = optim.Adam(self.qnet.parameters(), lr=lr)
 
         # Experience buffer for mini-batch updates
-        self.buffer = []
+        self.buffer: List[Tuple[Any, int, float, Any, bool]] = []
+        self.buffer_max = buffer_max
 
         # Logging
         self.logs = {
@@ -216,37 +211,41 @@ class ApproxQLearningAgent:
 
     def greedy_policy(self, obs: Any) -> int:
         """Select action using greedy policy (no exploration)."""
+        feat = featurize(obs)
+        x = torch.from_numpy(feat).float().unsqueeze(0).to(self.device)
         with torch.no_grad():
-            # Reuse pre-allocated tensor
-            np.copyto(self.feat_tensor.cpu().numpy(), featurize(obs).reshape(1, -1))
-            q = self.qnet(self.feat_tensor)
-            return int(q.argmax(dim=1).item())
+            q = self.qnet(x)
+        return int(q.argmax(dim=1).item())
 
     def select_action(self, obs: Any) -> int:
         """epsilon-greedy policy action selection."""
         if random.random() < self.epsilon:
             return int(np.random.randint(self.action_space_n))
 
+        feat = featurize(obs)
+        x = torch.from_numpy(feat).float().unsqueeze(0).to(self.device)
         with torch.no_grad():
-            # Reuse pre-allocated tensor
-            np.copyto(self.feat_tensor.cpu().numpy(), featurize(obs).reshape(1, -1))
-            q = self.qnet(self.feat_tensor)
-            return int(q.argmax(dim=1).item())
+            q = self.qnet(x)
+        return int(q.argmax(dim=1).item())
 
     def update(self, obs: Any, action: int, reward: float, next_obs: Any, done: bool):
-        """Collect experience and perform batch updates."""
+        """Collect experience and perform batch updates, sample random minibatches (random.sample), not clearing the buffer after update"""
+        # Append transition, enforce cap
+        if len(self.buffer) >= self.buffer_max:
+            # drop oldest
+            self.buffer.pop(0)
         self.buffer.append((obs, action, reward, next_obs, done))
 
         # Only update when we have enough samples
-        if len(self.buffer) >= self.batch_size:
-            # Sample batch
-            batch = self.buffer[-self.batch_size:]
+        if len(self.buffer) >= self.batch_size and len(self.buffer) % 4 == 0:
+            # Sample random batch (breaks temporal correlations)
+            batch = random.sample(self.buffer, self.batch_size)
 
             # Convert to tensors efficiently
             feats = torch.from_numpy(np.stack([featurize(o) for o, _, _, _, _ in batch])).float().to(self.device)
             next_feats = torch.from_numpy(np.stack([featurize(no) for _, _, _, no, _ in batch])).float().to(self.device)
-            actions = torch.tensor([a for _, a, _, _, _ in batch], device=self.device)
-            rewards = torch.tensor([r for _, _, r, _, _ in batch], device=self.device)
+            actions = torch.tensor([a for _, a, _, _, _ in batch], device=self.device, dtype=torch.long)
+            rewards = torch.tensor([r for _, _, r, _, _ in batch], device=self.device, dtype=torch.float32)
             dones = torch.tensor([d for _, _, _, _, d in batch], dtype=torch.float32, device=self.device)
 
             # Compute Q values for current states
@@ -255,17 +254,69 @@ class ApproxQLearningAgent:
 
             # Compute target Q values
             with torch.no_grad():
-                next_q = self.qnet(next_feats)
+                next_q = self.target_qnet(next_feats)
                 max_next_q = next_q.max(1)[0]
                 targets = rewards + self.gamma * max_next_q * (1 - dones)
 
-            
-            # Compute loss and update using torch.nn.functional
-            loss = torch.nn.functional.mse_loss(q_values, targets)  
+            # Compute loss and update
+            loss = torch.nn.functional.mse_loss(q_values, targets)
             self.optimizer.zero_grad()
             loss.backward()
+            # optional: clip gradients (helps stability)
+            nn.utils.clip_grad_norm_(self.qnet.parameters(), 10.0)
             self.optimizer.step()
 
-            # Clear buffer after update
-            self.buffer = []
+        self.update_counter += 1
+        if self.update_counter % 1000 == 0:
+            self.target_qnet.load_state_dict(self.qnet.state_dict())
 
+
+    def decay_epsilon(self, factor: float = 0.995, min_epsilon: float = None):
+        """Decay epsilon for exploration schedule."""
+        if min_epsilon is None:
+            min_epsilon = self.epsilon_min
+        self.epsilon = max(min_epsilon, self.epsilon * factor)
+
+    def train(self, env, num_episodes: int = 1000, log_every: int = 10):
+        """Train loop (keeps your original style)."""
+        if self.epsilon_decay is None:
+            self.epsilon_decay = self.epsilon / (num_episodes / 2)
+
+        for ep in range(num_episodes):
+            obs, _ = env.reset()
+            done = False
+
+            episode_reward = 0
+            episode_length = 0
+            truncated = False
+
+            while not done:
+                action = self.select_action(obs)
+                next_obs, reward, terminated, truncated, info = env.step(action)
+
+                episode_length += 1
+                episode_reward += reward
+
+                done = terminated or truncated
+
+                # update collects transition and may perform minibatch gradient steps
+                self.update(obs, action, reward, next_obs, done)
+
+                obs = next_obs
+
+            # Log episode statistics
+            self.logs["epsilons"].append(self.epsilon)
+            self.logs["episode_lengths"].append(episode_length)
+            self.logs["episode_rewards"].append(episode_reward)
+            self.logs["truncated"].append(truncated)
+            self.logs["final_cooking_rewards"].append(reward)
+
+            # Epsilon decay (linear fallback)
+            if isinstance(self.epsilon_decay, (int, float)) and self.epsilon_decay > 0:
+                self.epsilon = max(self.epsilon_min, self.epsilon - self.epsilon_decay)
+
+            if (ep + 1) % log_every == 0:
+                print(
+                    f"Episode {ep+1} | Epsilon = {self.epsilon:.3f} | Steps = {episode_length} | "
+                    f"Reward = {episode_reward:.2f} | Truncated = {truncated} | Cooking Reward = {reward:.2f}"
+                )
