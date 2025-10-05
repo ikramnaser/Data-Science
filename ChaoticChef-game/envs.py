@@ -29,12 +29,15 @@ class ChaoticChef(gym.Env):
         }
         self.action_space = spaces.Discrete(len(self.actions))
 
-        # Observation: agent position (2), bag vector (len(ingredients)), steps_left (1) normalized
+        # Observation: agent position (2), bag vector (len(ingredients)), steps_left (1) normalize, full grid so the environment is fully observable (MDP)
         self.observation_space = spaces.Dict(
             {
                 "pos": spaces.Box(low=0, high=self.grid_size - 1, shape=(2,), dtype=np.int32),
                 "bag": spaces.MultiBinary(len(self.ingredients)),
                 "steps_left": spaces.Box(low=0.0, high=1.0, shape=(1,), dtype=np.float32),
+                # grid holds the ingredient index for each cell, flattened
+                "grid": spaces.Box(low=0, high=max(0, len(self.ingredients) - 1),
+                                     shape=(self.grid_size * self.grid_size,), dtype=np.int32),
             }
         )
 
@@ -171,7 +174,7 @@ class ChaoticChef(gym.Env):
                 else:
                     continue
 
-            # Update best score 
+            # Update best score
             if score > best_score:
                 best_score = score
                 best_recipe = meta["name"]
@@ -191,7 +194,8 @@ class ChaoticChef(gym.Env):
                 bag[self.name_to_index[name]] = 1
         steps_left = np.array([max(0.0, 1.0 - self.steps / self.max_steps)], dtype=np.float32)
         obs = {"pos": pos, "bag": bag, "steps_left": steps_left}
-        if isinstance(self, BudgetChef): # Only include budget_ratio for BudgetChef
+        obs["grid"] = self.grid.flatten() # to make environment fully observable I am including the full grid layout
+        if isinstance(self, BudgetChef): # only include budget_ratio for BudgetChef
             budget_ratio = np.array([max(0.0, min(1.0, self.budget / max(1.0, float(self.start_budget))))], dtype=np.float32)
             obs["budget_ratio"] = budget_ratio
         return obs
@@ -218,13 +222,15 @@ class BudgetChef(ChaoticChef):
         self.budget = self.start_budget
         self.net_worth = float(self.start_budget)
 
-        # Update observation space to include budget
+        # Update observation space to include budget and grid
         self.observation_space = spaces.Dict(
             {
                 "pos": spaces.Box(low=0, high=self.grid_size - 1, shape=(2,), dtype=np.int32),
                 "bag": spaces.MultiBinary(len(self.ingredients)),
                 "steps_left": spaces.Box(low=0.0, high=1.0, shape=(1,), dtype=np.float32),
                 "budget_ratio": spaces.Box(low=0.0, high=1.0, shape=(1,), dtype=np.float32),
+                "grid": spaces.Box(low=0, high=max(0, len(self.ingredients) - 1),
+                                     shape=(self.grid_size * self.grid_size,), dtype=np.int32),
             }
         )
 
@@ -349,7 +355,8 @@ class BudgetChef(ChaoticChef):
                 bag[self.name_to_index[name]] = 1
         steps_left = np.array([max(0.0, 1.0 - self.steps / self.max_steps)], dtype=np.float32)
         obs = {"pos": pos, "bag": bag, "steps_left": steps_left}
-        if isinstance(self, BudgetChef): # Only include budget_ratio for BudgetChef
+        obs["grid"] = self.grid.flatten() # to make environment fully observable I am including the full grid layout
+        if isinstance(self, BudgetChef): # only include budget_ratio for BudgetChef
             budget_ratio = np.array([max(0.0, min(1.0, self.budget / max(1.0, float(self.start_budget))))], dtype=np.float32)
             obs["budget_ratio"] = budget_ratio
         return obs
