@@ -26,8 +26,8 @@ def plot_returns(returns_list: Sequence[Sequence[float]], labels: Sequence[str],
 def plot_evaluation_bars(agent_names: Sequence[str], avg_cooking_rewards: Sequence[float], std_cooking_rewards: Sequence[float],
                          avg_episode_rewards: Sequence[float], std_episode_rewards: Sequence[float]):
     """Generates bar plots for evaluation results with standard deviation."""
-    x = np.arange(len(agent_names))  
-    width = 0.35  
+    x = np.arange(len(agent_names))
+    width = 0.35
 
     fig, axs = plt.subplots(1, 2, figsize=(12, 5))
 
