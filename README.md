@@ -159,7 +159,7 @@ recall: 0.8828, f1_score: 0.9111)
 
 ## Contact
 
-Feel free to reach out to discuss my work or potential collaborations.
+Feel free to reach out to discuss my work or collaborations.
 
 - **LinkedIn:** [linkedin.com/in/ikram-aittalebnaser](https://www.linkedin.com/in/ikram-aittalebnaser)  
 - **Email:** ikramaitt@outlook.it
