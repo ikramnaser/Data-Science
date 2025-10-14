@@ -134,6 +134,10 @@ Compared tabular Q-Learning vs Deep Q-Network (DQN) for optimal reward strategie
 
 **Tools & Skills:** Python, Reinforcement Learning
 
+</td>
+</tr>
+</table>
+
 <table>
 <tr>
 <td width="30%">
@@ -145,7 +149,7 @@ Compared tabular Q-Learning vs Deep Q-Network (DQN) for optimal reward strategie
 
 Built a system using LLaMA2 to answer questions and verify facts. Includes entity linking to Wikipedia/Wikidata for evidence-based validation.
 
-**Tools & Skills:** Python, LLaMA2, BERT, Hugging Face, Wikidata API, llama.cpp
+**Tools & Skills:** Python, LLaMA2, BERT, Hugging Face, Wikidata API
 
 </td>
 </tr>
