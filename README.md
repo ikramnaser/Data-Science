@@ -122,9 +122,9 @@ Achieved 44.7% test accuracy and 0.39 macro F1 on ~73,000 covers
 <table>
 <tr>
 <td width="30%">
-<td src="https://github.com/user-attachments/assets/81a15e55-19b3-4185-a766-1e0826ad6350" alt="Chaotic Chef Game" width="100%"/>
+  <img src="https://github.com/user-attachments/assets/81a15e55-19b3-4185-a766-1e0826ad6350" alt="Chaotic Chef Game" width="100%"/>
 </td>
-<td width:"70%">
+<td width="70%">
 
 ### [Chaotic Chef Game](https://github.com/ikramnaser/Data-Science/tree/main/ChaoticChef-game)
 
