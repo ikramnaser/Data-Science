@@ -121,6 +121,20 @@ Achieved 44.7% test accuracy and 0.39 macro F1 on ~73,000 covers
 
 <table>
 <tr>
+<td src="https://github.com/user-attachments/assets/81a15e55-19b3-4185-a766-1e0826ad6350" alt="Chaotic Chef Game"/>
+</td>
+<td style="width:70%>
+
+### [Chaotic Chef Game](https://github.com/ikramnaser/Data-Science/tree/main/ChaoticChef-game)
+
+Can a chef learn to cook with reinforcement learning?  
+ChaoticChef puts agents in a 5×5 grid world, collecting ingredients to cook dishes.  
+Compared tabular Q-Learning vs Deep Q-Network (DQN) for optimal reward strategies.
+
+**Tools & Skills:** Python, Reinforcement Learning
+
+<table>
+<tr>
 <td width="30%">
 <img src="https://github.com/user-attachments/assets/a4bfb0c0-7084-482c-a9a7-824fe6806a64" alt="Fact-check" width="100%"/>
 </td>
