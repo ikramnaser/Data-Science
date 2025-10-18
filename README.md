@@ -89,7 +89,7 @@ Designed and evaluated prompt engineering strategies, syntax parsing, and human 
 </td>
 <td width="70%">
 
-### [Cloud-Deployed Predictive Healthcare API](https://github.com/ikramnaser/Deploy-ML-Models-on-Google-Cloud-Platform)
+### [Deployed on GCP a Predictive Healthcare API](https://github.com/ikramnaser/Deploy-ML-Models-on-Google-Cloud-Platform)
 
 Developed a ML model to predict heart disease risk from patient clinical data using a Decision Tree classifier.
 Implemented end-to-end workflow: data preprocessing, model training, evaluation, and real-time inference via a REST API.
